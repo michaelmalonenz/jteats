@@ -1,0 +1,5 @@
+flask
+flask-dotenv
+psycopg2
+authlib
+requests

@@ -1,0 +1,5 @@
+pip-tools
+pytest
+pylint
+autopep8
+-r requirements.in
