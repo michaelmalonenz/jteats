@@ -3,14 +3,16 @@ import json
 import logging
 from flask import Flask, render_template, g, session, redirect, jsonify, request
 from flask_dotenv import DotEnv
-from authlib.integrations.flask_client import OAuth
+from sqlalchemy import create_engine
+from dbconfig import get_db_url
+
+#from authlib.integrations.flask_client import OAuth
 # from api import API_APP
 # from repository import DatabaseConnector, SettingsRepository
 # from repository.local import UserRepository
 
 
 LOGGER = logging.getLogger(__name__)
-DB_CONFIG = None
 
 app = Flask(__name__)
 env = DotEnv()
@@ -62,18 +64,10 @@ env.init_app(app)
 # def login():
 #     return auth0.authorize_redirect(redirect_uri=oauth_conf['callbackURL'])
 
-
-# def read_db_config():
-#     global DB_CONFIG
-#     if DB_CONFIG is None:
-#         with open('config/config.json') as inf:
-#             DB_CONFIG = json.load(inf)
-#     return DB_CONFIG
-
-
-# @app.before_request
-# def connect_to_db():
-#     g.db = DatabaseConnector(**read_db_config())
+@app.before_request
+def connect_to_db():
+    url = get_db_url()
+    g.db = create_engine(url)
 #     if 'profile' in session:
 #         g.current_user = UserRepository(g.db).get_by_external_id(
 #             session['profile']['user_id'])

@@ -218,7 +218,17 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
       { test: /\.(woff|woff2|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,  type: 'asset' },
       { test: /environment\.json$/i, use: [
         {loader: "app-settings-loader", options: {env: production ? 'production' : 'development' }},
-      ]}
+      ]},
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+        issuer: /\.[tj]s$/i
+      },
+      {
+        test: /\.scss$/,
+        use: ['css-loader', 'sass-loader'],
+        issuer: /\.html?$/i
+      }
     ]
   },
   plugins: [
