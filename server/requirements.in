@@ -1,5 +1,6 @@
 flask
 flask-dotenv
+flask-session
 psycopg2
 authlib
 requests

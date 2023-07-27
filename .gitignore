@@ -2,3 +2,5 @@
 server/.env
 dbconfig.json
 *.pyc
+oauth-config.json
+flask_session/
