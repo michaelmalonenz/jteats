@@ -9,8 +9,7 @@ from dbconfig import get_db_url
 
 from authlib.integrations.flask_client import OAuth
 # from api import API_APP
-# from repository import DatabaseConnector, SettingsRepository
-# from repository.local import UserRepository
+from repositories import UserRepository
 
 
 LOGGER = logging.getLogger(__name__)
@@ -58,11 +57,12 @@ def callback_handling():
         'picture': userinfo['picture']
     }
 
-#     UserRepository(g.db).upsert_external_user(
-#         userinfo['sub'],
-#         userinfo['name'],
-#         userinfo['nickname'],
-#         userinfo['picture'])
+    UserRepository(g.db).upsert_external_user(
+        userinfo['sub'],
+        userinfo['name'],
+        userinfo['nickname'],
+        userinfo['picture'],
+        userinfo['email'])
 
     return redirect('/')
 
@@ -73,8 +73,7 @@ def login():
 
 @app.before_request
 def connect_to_db():
-    url = get_db_url()
-    g.db = create_engine(url)
+    g.db = create_engine(get_db_url())
 #     if 'profile' in session:
 #         g.current_user = UserRepository(g.db).get_by_external_id(
 #             session['profile']['user_id'])
