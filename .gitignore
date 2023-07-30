@@ -4,3 +4,4 @@ dbconfig.json
 *.pyc
 oauth-config.json
 flask_session/
+__pycache__/
