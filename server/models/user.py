@@ -13,3 +13,13 @@ class User(Base):
     external_id: Mapped[Optional[str]] = mapped_column(String(50))
     nickname: Mapped[Optional[str]] = mapped_column(String(50))
     picture_url: Mapped[Optional[str]] = mapped_column(String(2000))
+
+    def to_viewmodel(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'externalId': self.external_id,
+            'nickname': self.nickname,
+            'pictureUrl': self.picture_url,
+        }

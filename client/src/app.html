@@ -2,5 +2,7 @@
   <require from="./style/application.scss"></require>
   <require from="./nav-bar"></require>
   <nav-bar router.bind="router"></nav-bar>
-  <h1>${message}</h1>
+  <div class="page-host container-fluid h-100">
+    <router-view></router-view>
+  </div>
 </template>

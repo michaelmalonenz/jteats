@@ -1,0 +1,30 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-default .navbar-brand {
+    color: $primary;
+}
+
+.navbar-default {
+    padding-left: 0.5em;
+    padding-right: calc(0.5em + 16px);
+}
+
+.loader {
+    margin-right: 10px;
+}
+
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.vertically-center-row {
+  display: flex;
+  align-items: center;
+}

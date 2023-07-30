@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 from dbconfig import get_db_url
 
 from authlib.integrations.flask_client import OAuth
-# from api import API_APP
+from api import API_APP
 from repositories import UserRepository
 
 
@@ -17,7 +17,7 @@ LOGGER = logging.getLogger(__name__)
 app = Flask(__name__)
 env = DotEnv()
 env.init_app(app)
-# app.register_blueprint(API_APP, url_prefix='/api')
+app.register_blueprint(API_APP, url_prefix='/api')
 oauth = OAuth(app)
 
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -74,10 +74,8 @@ def login():
 @app.before_request
 def connect_to_db():
     g.db = create_engine(get_db_url())
-#     if 'profile' in session:
-#         g.current_user = UserRepository(g.db).get_by_external_id(
-#             session['profile']['user_id'])
-#         g.user_settings = SettingsRepository(g.db).read_for_user(g.current_user.id)
+    if 'profile' in session:
+        g.current_user_id = session['profile']['user_id']
 
 
 def requires_auth(f):

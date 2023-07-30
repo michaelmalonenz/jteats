@@ -4,7 +4,8 @@ import {PLATFORM} from 'aurelia-pal';
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    .feature(PLATFORM.moduleName('resources/index'));
+    .feature(PLATFORM.moduleName('resources/index'))
+    .globalResources([PLATFORM.moduleName('meals')]);
 
   aurelia.use.developmentLogging(environment.debug ? 'debug' : 'warn');
 

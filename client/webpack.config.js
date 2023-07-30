@@ -69,7 +69,7 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
       // sizes are compared against source before minification
 
       // This is the HTTP/1.1 optimized maxSize.
-      maxSize: 200000, // splits chunks if bigger than 200k, adjust as required (maxSize added in webpack v4.15)
+      maxSize: 2000000, // splits chunks if bigger than 200k, adjust as required (maxSize added in webpack v4.15)
       /* This is the HTTP/2 optimized options.
       maxInitialRequests: Infinity, // Default is 3, make this unlimited if using HTTP/2
       maxAsyncRequests: Infinity, // Default is 5, make this unlimited if using HTTP/2

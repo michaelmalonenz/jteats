@@ -13,6 +13,11 @@ class UserRepository():
             statement = select(User).where(User.id == id)
             return session.scalars(statement).one_or_none()
 
+    def get_by_external_id(self, id):
+        with Session(self.engine) as session:
+            statement = select(User).where(User.external_id == id)
+            return session.scalars(statement).one_or_none()
+
     def get_by_email(self, email):
         with Session(self.engine) as session:
             statement = select(User).where(User.email == email)
