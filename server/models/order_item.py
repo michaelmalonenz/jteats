@@ -18,8 +18,13 @@ class OrderItem(Base):
     meal: Mapped["Meal"] = relationship(viewonly=True)
 
     def to_viewmodel(self):
-        pass
+        return {
+            'quantity': self.quantity,
+        }
 
     @staticmethod
     def from_viewmodel(**kwargs):
-        return None
+        result = OrderItem()
+        result.id = kwargs.get('id')
+        result.quantity = kwargs.get('quantity')
+        return result

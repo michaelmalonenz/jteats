@@ -9,7 +9,7 @@ class MealRepository:
 
     def get_all(self):
         statement = select(Meal)
-        return self.session.execute(statement).all()
+        return self.session.scalars(statement).all()
 
     def insert(self, meal):
         self.session.add(meal)

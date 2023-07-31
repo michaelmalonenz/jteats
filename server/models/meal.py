@@ -18,7 +18,7 @@ class Meal(Base):
             'id': self.id,
             'date': self.date,
             'description': self.description,
-            'orderItems': [OrderItem.to_viewmodel(x) for x in self.order_items],
+            'orderItems': [x.to_viewmodel() for x in self.order_items],
         }
 
     @staticmethod

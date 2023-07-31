@@ -5,7 +5,7 @@ from models import Meal
 
 
 @API_APP.route('/meals', methods=['POST', 'GET'])
-def meals():
+def meals_api():
     if request.method == 'POST':
         meal = Meal.from_viewmodel(**request.json)
         repo = MealRepository(g.db_session)

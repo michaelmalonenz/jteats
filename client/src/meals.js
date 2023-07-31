@@ -9,6 +9,11 @@ export class Meals {
   constructor (dialogService, mealService) {
     this.dialogService = dialogService
     this.mealService = mealService
+    this.meals = []
+  }
+
+  async activate () {
+    this.meals = await this.mealService.getAll()
   }
 
   createMeal() {
