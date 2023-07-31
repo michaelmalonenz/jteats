@@ -4,7 +4,7 @@ import logging
 from flask import Flask, render_template, g, session, redirect, request, send_from_directory
 from flask_session import Session
 from flask_dotenv import DotEnv
-from sqlalchemy import create_engine
+import sqlalchemy
 from dbconfig import get_db_url
 
 from authlib.integrations.flask_client import OAuth
@@ -57,7 +57,7 @@ def callback_handling():
         'picture': userinfo['picture']
     }
 
-    UserRepository(g.db).upsert_external_user(
+    UserRepository(g.db_session).upsert_external_user(
         userinfo['sub'],
         userinfo['name'],
         userinfo['nickname'],
@@ -73,9 +73,16 @@ def login():
 
 @app.before_request
 def connect_to_db():
-    g.db = create_engine(get_db_url())
+    db = sqlalchemy.create_engine(get_db_url())
+    g.db_session = sqlalchemy.orm.Session(db)
     if 'profile' in session:
         g.current_user_id = session['profile']['user_id']
+
+
+@app.teardown_request
+def close_db_connection(err):
+    if g.db_session:
+        g.db_session.close()
 
 
 def requires_auth(f):
