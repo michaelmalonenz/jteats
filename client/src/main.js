@@ -4,8 +4,13 @@ import {PLATFORM} from 'aurelia-pal';
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
+    .plugin(PLATFORM.moduleName('aurelia-dialog'))
     .feature(PLATFORM.moduleName('resources/index'))
-    .globalResources([PLATFORM.moduleName('meals')]);
+    .feature(PLATFORM.moduleName('dialogs/index'))
+    .globalResources([
+      PLATFORM.moduleName('meals'),
+      PLATFORM.moduleName('menus'),
+    ]);
 
   aurelia.use.developmentLogging(environment.debug ? 'debug' : 'warn');
 

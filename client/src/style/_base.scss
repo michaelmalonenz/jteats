@@ -1,6 +1,7 @@
 .navbar {
     display: flex;
     justify-content: space-between;
+    height: 10vh;
 }
 
 .navbar-default .navbar-brand {
@@ -27,4 +28,12 @@
 .vertically-center-row {
   display: flex;
   align-items: center;
+}
+
+.nav-item.active {
+    border-bottom: 1px solid $primary;
+}
+
+body {
+    height: 90vh;
 }

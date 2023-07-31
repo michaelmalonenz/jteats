@@ -1,0 +1,24 @@
+<template>
+  <ux-dialog class="meal-editor">
+    <ux-dialog-header>
+      <h2>${heading}</h2>
+    </ux-dialog-header>
+    <ux-dialog-body>
+      <div class=" row">
+        <div class="col-md-12 h-100">
+        </div>
+      </div>
+    </ux-dialog-body>
+
+    <ux-dialog-footer>
+      <div class="row">
+        <div class="col-8 tab-controls">
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-outline-secondary" click.trigger="close()">Cancel</button>
+          <button type="button" class="btn btn-primary" click.trigger="save()">Save</button>
+        </div>
+      </div>
+    </ux-dialog-footer>
+  </ux-dialog>
+</template>

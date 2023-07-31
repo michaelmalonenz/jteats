@@ -4,5 +4,6 @@ export function configure(config) {
   config.globalResources([
     PLATFORM.moduleName('./icon'),
     PLATFORM.moduleName('./user-panel'),
+    PLATFORM.moduleName('./date-picker'),
   ]);
 }

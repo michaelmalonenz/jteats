@@ -3,7 +3,7 @@ import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
 import '@fortawesome/fontawesome-free/js/regular'
 import '@fortawesome/fontawesome-free/js/brands'
-import { inject } from 'aurelia-framework'
+import { inject, PLATFORM } from 'aurelia-framework'
 import { AuthorizeStep } from './security/authorise'
 import { UserService } from './services/user'
 
@@ -28,7 +28,8 @@ export class App {
   configureRouter (config, router) {
     config.addPipelineStep('authorize', AuthorizeStep)
     config.map([
-      { route: ['', 'meals'], name: 'Meals', moduleId: 'meals', nav: true, title: 'Meals', auth: true, settings: { icon: 'fa-th' } },
+      { route: ['', 'meals'], name: 'Meals', moduleId: PLATFORM.moduleName('meals'), nav: true, title: 'Meals', auth: true, settings: { icon: 'fa-cutlery' } },
+      { route: ['menus'],     name: 'Menus', moduleId: PLATFORM.moduleName('menus'), nav: true, title: 'Menus', auth: true, settings: { icon: 'fa-book' } },
     ])
 
     this.router = router

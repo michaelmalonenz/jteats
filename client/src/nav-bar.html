@@ -5,7 +5,7 @@
           <!-- <img src="/static/images/logo_transparent_rectangle_116x42.png" alt="logo"> -->
       </a>
   
-      <div class="collapse navbar-collapse" id="navbarNav" if.bind="loggedIn">
+      <div class="collapse navbar-collapse navbar-center" id="navbarNav" if.bind="loggedIn">
         <ul class="navbar-nav">
           <li repeat.for="row of router.navigation" class="nav-item ${row.isActive ? 'active' : ''}">
             <a class="nav-link" href.bind="row.href"><i class="fa ${row.settings.icon}"></i> ${row.title}</a>

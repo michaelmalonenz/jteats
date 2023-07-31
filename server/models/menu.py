@@ -12,3 +12,9 @@ class Menu(Base):
     menu_sections: Mapped[List["MenuSection"]] = relationship(
         back_populates="menu", cascade="all, delete-orphan"
     )
+
+    def to_viewmodel(self):
+        pass
+
+    def from_viewmodel(self, **kwargs):
+        pass

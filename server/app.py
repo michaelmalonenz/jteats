@@ -1,7 +1,7 @@
 from functools import wraps
 import json
 import logging
-from flask import Flask, render_template, g, session, redirect, request
+from flask import Flask, render_template, g, session, redirect, request, send_from_directory
 from flask_session import Session
 from flask_dotenv import DotEnv
 from sqlalchemy import create_engine
@@ -93,6 +93,10 @@ def requires_auth(f):
 def index():
     return render_template('index.html')
 
+@requires_auth
+@app.route('/<path:path>', methods=['GET'])
+def send_static(path):
+    return send_from_directory('static', path)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
