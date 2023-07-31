@@ -1,0 +1,15 @@
+<template>
+  <div class="select-dropdown-container dropdown">
+    <div class="select-dropdown-selected-option" click.trigger="optionClicked($event)">
+      <compose class="select-dropdown-option" if.bind="selected" view-model.bind="selected"></compose>
+      <div show.bind="!selected" class="select-dropdown-option">
+        <slot>-- select --</slot>
+      </div>
+      <span class="fas fa-caret-down select-dropdown-edit"></span>
+    </div>
+    <div class="options-list ${active ? '' : 'd-none'}">
+      <compose class="select-dropdown-option" repeat.for="option of options" view-model.bind="option"
+        click.trigger="optionClicked($event, option)"></compose>
+    </div>
+  </div>
+</template>

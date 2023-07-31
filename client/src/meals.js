@@ -1,12 +1,14 @@
 import { DialogService } from 'aurelia-dialog'
 import { inject } from 'aurelia-framework'
 import { MealEditor } from './dialogs/meal-editor'
+import { MealService } from './services/meal'
 
-@inject(DialogService)
+@inject(DialogService, MealService)
 export class Meals {
  
-  constructor (dialogService) {
+  constructor (dialogService, mealService) {
     this.dialogService = dialogService
+    this.mealService = mealService
   }
 
   createMeal() {
@@ -16,6 +18,7 @@ export class Meals {
       lock: true
     }).whenClosed((response) => {
       if (!response.wasCancelled) {
+        this.mealService.create(response.output)
       }
     })
   }

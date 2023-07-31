@@ -1,4 +1,4 @@
-from sqlalchemy import select 
+from sqlalchemy import select, insert
 from sqlalchemy.orm import Session
 from models import Meal
 
@@ -12,3 +12,11 @@ class MealRepository:
         with Session(self.engine) as session:
             statement = select(Meal)
             return session.scalars(statement).all()
+
+    def insert(self, meal):
+        with Session(self.engine) as session:
+            session.add(meal)
+            session.commit()
+            session.flush()
+            session.refresh(meal)
+            return meal

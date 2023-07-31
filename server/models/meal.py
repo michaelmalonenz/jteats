@@ -18,11 +18,14 @@ class Meal(Base):
             'id': self.id,
             'date': self.date,
             'description': self.description,
-            'orderItems': [OrderItem.to_viewmodel(x) for x in self.order_items],
+            # 'orderItems': [OrderItem.to_viewmodel(x) for x in self.order_items],
         }
 
-    def from_viewmodel(self, **kwargs):
-        self.id = kwargs.get('id')
-        self.date = kwargs.get('date')
-        self.description = kwargs.get('description')
-        self.order_items = [OrderItem.from_viewmodel(**x) for x in kwargs['orderItems']]
+    @staticmethod
+    def from_viewmodel(**kwargs):
+        meal = Meal()
+        meal.id = kwargs.get('id')
+        meal.date = kwargs.get('date')
+        meal.description = kwargs.get('description')
+        meal.order_items = [OrderItem.from_viewmodel(**x) for x in kwargs['orderItems']]
+        return meal

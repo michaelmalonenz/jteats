@@ -5,5 +5,6 @@ export function configure(config) {
     PLATFORM.moduleName('./icon'),
     PLATFORM.moduleName('./user-panel'),
     PLATFORM.moduleName('./date-picker'),
+    PLATFORM.moduleName('./select-dropdown'),
   ]);
 }

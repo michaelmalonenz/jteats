@@ -1,5 +1,7 @@
 import { DialogController } from 'aurelia-dialog'
 import { inject } from 'aurelia-framework'
+import moment from 'moment'
+import { Meal } from '../models/meal'
 
 @inject(DialogController)
 export class MealEditor {
@@ -8,10 +10,16 @@ export class MealEditor {
 
   constructor (dialogController) {
     this.controller = dialogController
+    this.date = moment()
+    this.max = moment().add(4, 'weeks')
+    this.description = ''
   }
   
   save () {
-    this.controller.ok()
+    this.controller.ok(new Meal({
+      date: this.date.format('YYYY-MM-DD'),
+      description: this.description,
+    }))
   }
 
   close () {

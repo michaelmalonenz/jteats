@@ -3,18 +3,26 @@
     <ux-dialog-header>
       <h2>${heading}</h2>
     </ux-dialog-header>
+
     <ux-dialog-body>
-      <div class=" row">
-        <div class="col-md-12 h-100">
+      <div class="row">
+        <div class="col-md-12">
+          <date-picker label="Meal Date" value.bind="date" max-date.bind="max"></date-picker>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" value.bind="description" placeholder="description"></textarea>
+          </div>
         </div>
       </div>
     </ux-dialog-body>
 
     <ux-dialog-footer>
-      <div class="row">
-        <div class="col-8 tab-controls">
-        </div>
-        <div class="col-4">
+      <div class="row dialog-button-row">
+        <div class="col-8 offset-4">
           <button type="button" class="btn btn-outline-secondary" click.trigger="close()">Cancel</button>
           <button type="button" class="btn btn-primary" click.trigger="save()">Save</button>
         </div>

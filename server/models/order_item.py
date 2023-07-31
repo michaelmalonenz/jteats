@@ -20,5 +20,6 @@ class OrderItem(Base):
     def to_viewmodel(self):
         pass
 
-    def from_viewmodel(self, **kwargs):
-        pass
+    @staticmethod
+    def from_viewmodel(**kwargs):
+        return None
