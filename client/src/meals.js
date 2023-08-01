@@ -21,9 +21,10 @@ export class Meals {
       viewModel: MealEditor,
       model: {},
       lock: true
-    }).whenClosed((response) => {
+    }).whenClosed(async (response) => {
       if (!response.wasCancelled) {
-        this.mealService.create(response.output)
+        const meal = await this.mealService.create(response.output)
+        this.meals.push(meal)
       }
     })
   }

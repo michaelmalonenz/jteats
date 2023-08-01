@@ -1,1 +1,8 @@
-<template></template>
+<template>
+    <div class="menu-sidebar">
+        <button type="button" class="btn btn-primary" click.delegate="createMenu()">Create <i class="fa fa-plus"></i></button>
+        <div repeat.for="menu of menus">
+            ${menu.title}
+        </div>
+    </div>
+</template>

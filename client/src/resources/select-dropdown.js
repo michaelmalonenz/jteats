@@ -38,12 +38,6 @@ export class SelectDropDown {
     }
   }
 
-  valueChanged (newValue, oldValue) {
-    if (!newValue || isEmpty(newValue)) {
-      this.selected = null
-    }
-  }
-
   _addDeactivateListeners () {
     document.addEventListener('click', this.boundOptionClicked)
   }

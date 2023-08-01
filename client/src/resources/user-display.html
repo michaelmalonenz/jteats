@@ -1,0 +1,9 @@
+<template>
+    <div class="user-display" show.bind="!!user">
+      <img src.bind="user.pictureUrl" class="user-display-pic" alt="User Avatar" title.bind="user.name">
+      <span class="user-name" if.bind="!avatarOnly">
+        ${user.name}
+      </span>
+    </div>
+  </template>
+  

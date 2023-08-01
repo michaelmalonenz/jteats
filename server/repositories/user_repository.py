@@ -7,6 +7,10 @@ class UserRepository():
     def __init__(self, session):
         self.session = session
 
+    def get_all(self):
+        statement = select(User)
+        return self.session.scalars(statement).all()
+
     def get_by_id(self, id):
         statement = select(User).where(User.id == id)
         return self.session.scalars(statement).one_or_none()
