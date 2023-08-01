@@ -30,9 +30,4 @@ export class MenuEditor {
     }))
   }
 
-  keypress (event) {
-    if (event.key === 13) {
-      this.save()
-    }
-  }
 }

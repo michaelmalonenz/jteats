@@ -6,5 +6,6 @@ export function configure(config) {
     PLATFORM.moduleName('./user-panel'),
     PLATFORM.moduleName('./date-picker'),
     PLATFORM.moduleName('./select-dropdown'),
+    PLATFORM.moduleName('./focus-on-attach'),
   ]);
 }

@@ -1,4 +1,4 @@
-from sqlalchemy import select 
+from sqlalchemy import select, update
 from models import Menu
 
 
@@ -18,7 +18,13 @@ class MenuRepository:
         return menu
 
     def update(self, menu):
-        self.session.add(menu)
+        statement = (
+            update(Menu).
+            where(Menu.id == menu.id).
+            values(restaurant=menu.restaurant, description=menu.description).
+            returning(Menu)
+        )
+        menu = self.session.scalars(statement).one()
         self.session.commit()
-        self.session.refresh(menu)
+
         return menu
