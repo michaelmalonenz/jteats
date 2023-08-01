@@ -9,7 +9,7 @@ export class MenuService {
     this._http = http
   }
 
-  async create(menu) {
+  async create (menu) {
     const res = await this._http
       .createRequest('/api/menus')
       .asPost()
@@ -20,12 +20,23 @@ export class MenuService {
     return res.content
   }
 
-  async getAll() {
+  async getAll () {
     const res = await this._http
         .createRequest('/api/menus')
         .asGet()
         .withReviver(this._menuReviver)
         .send()
+
+    return res.content
+  }
+
+  async update (menu) {
+    const res = await this._http
+      .createRequest(`/api/menus/${menu.id}`)
+      .asPut()
+      .withContent(menu)
+      .withReviver(this._menuReviver)
+      .send()
 
     return res.content
   }

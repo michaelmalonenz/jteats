@@ -9,7 +9,7 @@
         <div class="col-md-12">
           <div class="form-group">
             <label>Restaurant name</label>
-            <input class="form-control" type="text" value.bind="restaurant" placeholder="Restaurant name">
+            <input attach-focus class="form-control" type="text" value.bind="restaurant" placeholder="Restaurant name">
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
       <div class="row dialog-button-row">
         <div class="col-8 offset-4">
           <button type="button" class="btn btn-outline-secondary" click.trigger="close()">Cancel</button>
-          <button type="button" class="btn btn-primary" click.trigger="save()">Save</button>
+          <button type="button" class="btn btn-primary" click.trigger="save()" keypress.trigger="keypress(event)">Save</button>
         </div>
       </div>
     </ux-dialog-footer>

@@ -2,6 +2,7 @@ from typing import Optional, List
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ._base import Base
+from .menu_section import MenuSection
 
 
 class Menu(Base):
@@ -28,4 +29,5 @@ class Menu(Base):
         result.id = kwargs.get('id')
         result.restaurant = kwargs.get('restaurant')
         result.description = kwargs.get('description')
+        result.menu_sections = [MenuSection.from_viewmodel(x) for x in kwargs.get('menuSections', [])]
         return result

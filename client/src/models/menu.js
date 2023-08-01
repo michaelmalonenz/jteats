@@ -3,7 +3,7 @@ export class Menu {
         this.id = null
         this.restaurant = null
         this.description = null
-        this.sections = []
+        this.menuSections = []
         Object.assign(this, menu)
     }
 }

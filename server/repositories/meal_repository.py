@@ -8,7 +8,7 @@ class MealRepository:
         self.session = session
 
     def get_all(self):
-        statement = select(Meal)
+        statement = select(Meal).order_by(Meal.date.desc())
         return self.session.scalars(statement).all()
 
     def insert(self, meal):

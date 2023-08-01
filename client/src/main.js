@@ -4,7 +4,9 @@ import {PLATFORM} from 'aurelia-pal';
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
-    .plugin(PLATFORM.moduleName('aurelia-dialog'))
+    .plugin(PLATFORM.moduleName('aurelia-dialog'), (config) => {
+      config.settings.keyboard = ['ESCAPE']
+    })
     .feature(PLATFORM.moduleName('resources/index'))
     .feature(PLATFORM.moduleName('dialogs/index'))
     .globalResources([

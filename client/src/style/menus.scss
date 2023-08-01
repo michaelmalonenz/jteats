@@ -1,5 +1,36 @@
+.menu-page {
+    height: calc(100% - 2vh);
+    display: flex;
+}
+
 .menu-sidebar {
     border-right: 2px solid $primary;
     width: 200px;
-    height: calc(100% - 2vh);
+    height: 100%;
+}
+
+.menu-selector {
+    text-align: center;
+    padding: 0.5em;
+    margin: 2px;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover {
+        border: solid 1px $primary;
+        color: $primary;
+    }
+    
+    &:active {
+        background-color: $primary;
+        color: var(--bs-body-bg);
+    }
+}
+
+.menu-content {
+    margin-left: 1em;
+}
+
+.menu-sections-header {
+    display: flex;
 }

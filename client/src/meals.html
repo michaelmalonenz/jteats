@@ -2,7 +2,9 @@
     <div class="meal-sidebar">
         <button type="button" class="btn btn-primary" click.delegate="createMeal()">Create <i class="fa fa-plus"></i></button>
         <div repeat.for="meal of meals">
-            ${meal.date.format('YYYY-MM-DD')}
+            <div class="meal-selector" click.delegate="selectMeal(meal)">
+                ${meal.date.format('YYYY-MM-DD')}
+            </div>
         </div>
     </div>
 </template>
