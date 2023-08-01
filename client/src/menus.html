@@ -2,18 +2,18 @@
     <div class="menu-page">
         <div class="menu-sidebar">
             <button type="button" class="btn btn-primary" click.delegate="createMenu()">Create <i class="fa fa-plus"></i></button>
-            <div repeat.for="menu of menus" class="menu-selector" click.delegate="selectMenu(menu)">
+            <div repeat.for="menu of menus" class="menu-selector" click.delegate="selectMenu(menu)" dblclick.delegate="editMenu(menu)">
                 ${menu.restaurant}
             </div>
         </div>
         <div if.bind="!!selected" class="menu-content">
             <div class="h2">${selected.restaurant}</div>
             <div class="menu-sections-header">
-                <div repeat.for="section of selected.menuSections"></div>
+                <div repeat.for="section of selected.menuSections">${section.name}</div>
                 <button type="button" class="btn btn-outline-primary" click.delegate="addSection()">Add Section <i class="fa fa-plus"></i></button>
             </div>
             <div class="menu-sections-content">
-                
+
             </div>
         </div>
     </div>
