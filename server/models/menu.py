@@ -8,14 +8,24 @@ class Menu(Base):
     __tablename__ = "menus"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[Optional[str]] = mapped_column(String(100))
+    restaurant: Mapped[Optional[str]] = mapped_column(String(100))
     description: Mapped[Optional[str]] = mapped_column(String(500))
     menu_sections: Mapped[List["MenuSection"]] = relationship(
         back_populates="menu", cascade="all, delete-orphan"
     )
 
     def to_viewmodel(self):
-        pass
+        return {
+            'id': self.id,
+            'restaurant': self.restaurant,
+            'description': self.description,
+            'menuSections': [x.to_viewmodel() for x in self.menu_sections]
+        }
 
-    def from_viewmodel(self, **kwargs):
-        pass
+    @staticmethod
+    def from_viewmodel(**kwargs):
+        result = Menu()
+        result.id = kwargs.get('id')
+        result.restaurant = kwargs.get('restaurant')
+        result.description = kwargs.get('description')
+        return result

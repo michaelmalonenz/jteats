@@ -1,0 +1,35 @@
+<template>
+  <ux-dialog class="menu-editor">
+    <ux-dialog-header>
+      <h2>Edit Menu</h2>
+    </ux-dialog-header>
+
+    <ux-dialog-body>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Restaurant name</label>
+            <input class="form-control" type="text" value.bind="restaurant" placeholder="Restaurant name">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" value.bind="description" placeholder="description"></textarea>
+          </div>
+        </div>
+      </div>
+    </ux-dialog-body>
+
+    <ux-dialog-footer>
+      <div class="row dialog-button-row">
+        <div class="col-8 offset-4">
+          <button type="button" class="btn btn-outline-secondary" click.trigger="close()">Cancel</button>
+          <button type="button" class="btn btn-primary" click.trigger="save()">Save</button>
+        </div>
+      </div>
+    </ux-dialog-footer>
+  </ux-dialog>
+</template>
