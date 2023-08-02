@@ -19,10 +19,10 @@ class MenuRepository:
 
     def update(self, menu):
         statement = (
-            update(Menu).
-            where(Menu.id == menu.id).
-            values(restaurant=menu.restaurant, description=menu.description).
-            returning(Menu)
+            update(Menu)
+            .where(Menu.id == menu.id)
+            .values(restaurant=menu.restaurant, description=menu.description)
+            .returning(Menu)
         )
         menu = self.session.scalars(statement).one()
         self.session.commit()

@@ -5,7 +5,7 @@ export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .plugin(PLATFORM.moduleName('aurelia-dialog'), (config) => {
-      config.settings.keyboard = ['ESCAPE']
+      config.settings.keyboard = ['Escape']
     })
     .feature(PLATFORM.moduleName('resources/index'))
     .feature(PLATFORM.moduleName('dialogs/index'))

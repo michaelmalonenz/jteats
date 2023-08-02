@@ -19,3 +19,7 @@ ux-dialog {
 ux-dialog-overlay {
     background-color: rgba(0, 0, 0, 0.6);
 }
+
+.menu-section-editor, .menu-editor {
+    min-height: 55vh;
+}

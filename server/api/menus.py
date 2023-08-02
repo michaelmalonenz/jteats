@@ -23,9 +23,12 @@ def update_menu(menu_id):
     return jsonify(menu.to_viewmodel())
 
 
-@API_APP.route('/menus/<int:menu_id>/sections', methods=['POST'])
+@API_APP.route('/menus/<int:menu_id>/sections', methods=['POST', 'PUT'])
 def add_menu_section(menu_id):
     repo = MenuSectionRepository(g.db_session)
     section = MenuSection.from_viewmodel(**request.json)
-    section = repo.insert(section)
+    if request.method == 'POST':
+        section = repo.insert(section)
+    elif request.method == 'PUT':
+        section = repo.update(section)
     return jsonify(section.to_viewmodel())

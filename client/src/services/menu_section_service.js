@@ -5,11 +5,11 @@ import { MenuSection } from '../models/menu_section'
 @inject(HttpClient)
 export class MenuSectionService {
 
-  constructor(httpClient) {
+  constructor (httpClient) {
     this._http = httpClient
   }
 
-  async create(menuSection) {
+  async create (menuSection) {
     const res = await this._http
       .createRequest(`/api/menus/${menuSection.menuId}/sections`)
       .asPost()
@@ -20,7 +20,18 @@ export class MenuSectionService {
     return res.content
   }
 
-  _menuSectionReviver(key, value) {
+  async update (menuSection) {
+    const res = await this._http
+      .createRequest(`/api/menus/${menuSection.menuId}/sections`)
+      .asPut()
+      .withContent(menuSection)
+      .withReviver(this._menuSectionReviver)
+      .send()
+
+    return res.content
+  }
+
+  _menuSectionReviver (key, value) {
     if (key !== '' && value != null && typeof value === 'object' && !isNaN(key)) {
       return new MenuSection(value)
     }

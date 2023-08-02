@@ -11,12 +11,14 @@ export class MenuEditor {
     this.id = null
     this.restaurant = ''
     this.description = ''
+    this.header = 'Create Menu'
 
     this.boundKeyDown = this.keydown.bind(this)
   }
 
   activate (model) {
     if (!!model) {
+      this.header = 'Edit Menu'
       Object.assign(this, model)
     }
   }

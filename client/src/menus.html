@@ -6,14 +6,18 @@
                 ${menu.restaurant}
             </div>
         </div>
-        <div if.bind="!!selected" class="menu-content">
-            <div class="h2">${selected.restaurant}</div>
+        <div if.bind="!!selectedMenu" class="menu-content">
+            <div class="h2">${selectedMenu.restaurant}</div>
             <div class="menu-sections-header">
-                <div repeat.for="section of selected.menuSections">${section.name}</div>
-                <button type="button" class="btn btn-outline-primary" click.delegate="addSection()">Add Section <i class="fa fa-plus"></i></button>
+                <div class="menu-section-name" repeat.for="section of selectedMenu.menuSections"
+                     click.delegate="selectSection(section)" dblclick.delegate="editSection(section)">
+                    ${section.name}
+                </div>
+                <button type="button" class="btn btn-outline-primary" click.delegate="addSection()">
+                    Add Section <i class="fa fa-plus"></i>
+                </button>
             </div>
             <div class="menu-sections-content">
-
             </div>
         </div>
     </div>

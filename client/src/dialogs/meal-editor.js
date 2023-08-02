@@ -8,7 +8,7 @@ import { UserDisplay } from '../resources/user-display'
 @inject(DialogController, UserService)
 export class MealEditor {
 
-  heading = 'Meal Editor'
+  heading = 'Create Meal'
 
   constructor (dialogController, userService) {
     this.controller = dialogController

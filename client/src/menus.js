@@ -14,13 +14,14 @@ export class Menus {
     this.menuService = menuService
     this.menuSectionService = menuSectionService
     this.menus = []
-    this.selected = null
+    this.selectedMenu = null
+    this.selectedSection = null
   }
 
   async activate () {
     this.menus = await this.menuService.getAll()
     if (this.menus.length) {
-      this.selected = this.menus[0]
+      this.selectedMenu = this.menus[0]
     }
   }
 
@@ -44,32 +45,50 @@ export class Menus {
       lock: true
     }).whenClosed(async (response) => {
       if (!response.wasCancelled) {
-        const menu = await this.menuService.update(response.output)
-        const index = this.menus.findIndex((item) => item.id === menu.id)
-        if (index !== -1) {
-          Object.assign(this.menus[index], menu)
-        }
+        const updated = await this.menuService.update(response.output)
+        Object.assign(menus, updated)
       }
     })
   }
 
   selectMenu (menu) {
-    this.selected = menu
+    this.selectedMenu = menu
   }
 
   addSection () {
     this.dialogService.open({
       viewModel: MenuSectionEditor,
       model: {
-        menuId: this.selected.id,
+        menuId: this.selectedMenu.id,
+        section: null,
       },
       lock: true,
     }).whenClosed(async (response) => {
       if (!response.wasCancelled) {
         const section = await this.menuSectionService.create(response.output)
-        this.selected.menuSections.push(section)
+        this.selectedMenu.menuSections.push(section)
       }
     })
+  }
+
+  editSection (section) {
+    this.dialogService.open({
+      viewModel: MenuSectionEditor,
+      model: {
+        menuId: this.selectedMenu.id,
+        section: section,
+      },
+      lock: true,
+    }).whenClosed(async (response) => {
+      if (!response.wasCancelled) {
+        const updated = await this.menuSectionService.update(response.output)
+        Object.assign(section, updated)
+      }
+    })
+  }
+
+  selectSection (section) {
+    this.selectedSection = section
   }
 
 }
