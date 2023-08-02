@@ -1,15 +1,18 @@
-import { inject } from 'aurelia-framework'
+import { inject, DOM } from 'aurelia-framework'
 import { DialogController } from 'aurelia-dialog'
 import { Menu } from '../models/menu'
 
-@inject(DialogController)
+@inject(DialogController, DOM.Element)
 export class MenuEditor {
 
-  constructor(dialogController) {
+  constructor(dialogController, element) {
     this.controller = dialogController
+    this.element = element
     this.id = null
     this.restaurant = ''
     this.description = ''
+
+    this.boundKeyDown = this.keydown.bind(this)
   }
 
   activate (model) {
@@ -28,6 +31,20 @@ export class MenuEditor {
       restaurant: this.restaurant,
       description: this.description,
     }))
+  }
+
+  keydown (event) {
+    if (event.key === 'Enter') {
+      this.save()
+    }
+  }
+
+  attached () {
+    this.element.addEventListener('keydown', this.boundKeyDown)
+  }
+
+  detached () {
+    this.element.removeEventListener('keydown', this.boundKeyDown)
   }
 
 }

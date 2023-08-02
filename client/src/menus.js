@@ -46,9 +46,8 @@ export class Menus {
       if (!response.wasCancelled) {
         const menu = await this.menuService.update(response.output)
         const index = this.menus.findIndex((item) => item.id === menu.id)
-        this.menus[index] = menu
-        if (this.selected.id === menu.id) {
-          this.selected = menu
+        if (index !== -1) {
+          Object.assign(this.menus[index], menu)
         }
       }
     })
