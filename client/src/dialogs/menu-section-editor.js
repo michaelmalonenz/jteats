@@ -1,17 +1,19 @@
-import { inject } from 'aurelia-framework'
+import { inject, DOM } from 'aurelia-framework'
 import { DialogController } from 'aurelia-dialog'
 
-@inject(DialogController)
+@inject(DialogController, DOM.Element)
 export class MenuSectionEditor {
 
-    constructor (dialogController) {
+    constructor (dialogController, element) {
         this.controller = dialogController
+        this.element = element
         this.name = ''
         this.description = ''
         this.menuId = null
         this.menuSectionId = null
 
         this.header = 'Add Menu Section'
+        this.boundKeyDown = this.keydown.bind(this)
     }
 
     activate (model) {
@@ -36,4 +38,18 @@ export class MenuSectionEditor {
     close () {
         this.controller.cancel()
     }
+
+    keydown (event) {
+        if (event.key === 'Enter') {
+          this.save()
+        }
+      }
+
+      attached () {
+        this.element.addEventListener('keydown', this.boundKeyDown)
+      }
+
+      detached () {
+        this.element.removeEventListener('keydown', this.boundKeyDown)
+      }
 }
