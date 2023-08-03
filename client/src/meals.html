@@ -1,10 +1,17 @@
 <template>
+  <div class="meal-page">
     <div class="meal-sidebar">
-        <button type="button" class="btn btn-primary" click.delegate="createMeal()">Create <i class="fa fa-plus"></i></button>
-        <div repeat.for="meal of meals">
-            <div class="meal-selector" click.delegate="selectMeal(meal)">
-                ${meal.date.format('YYYY-MM-DD')}
-            </div>
+      <button type="button" class="btn btn-primary" click.delegate="createMeal()">Create <i
+          class="fa fa-plus"></i></button>
+      <div repeat.for="meal of meals">
+        <div class="meal-selector ${selectedMeal.id === meal.id ? 'active-meal' : ''}"
+          click.delegate="selectMeal(meal)">
+          ${meal.date.format('YYYY-MM-DD')}
         </div>
+      </div>
     </div>
+    <div class="meal-content">
+      <div class="h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${selectedMeal.menu.restaurant}</div>
+    </div>
+  </div>
 </template>

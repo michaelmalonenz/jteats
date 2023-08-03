@@ -1,11 +1,41 @@
+.meal-page {
+    display: flex;
+    height: 100%;
+}
+
 .meal-sidebar {
     border-right: 2px solid $primary;
     width: 200px;
     height: calc(100% - 2vh);
 }
 
+.meal-content {
+    display: flex;
+    flex-grow: 1;
+    margin-left: 1em;
+}
+
 .meal-selector {
     text-align: center;
     padding: 0.5em;
     cursor: pointer;
+    margin: 2px;
+    box-sizing: border-box;
+    border: solid 1px transparent;
+
+    &:hover {
+        border-radius: 5px;
+        border: solid 1px $primary;
+        color: $primary;
+    }
+
+    &:active {
+        background-color: $primary;
+        color: var(--bs-body-bg);
+    }
+}
+
+.active-meal {
+    color: $primary;
+    border-bottom: solid 1px $primary;
 }

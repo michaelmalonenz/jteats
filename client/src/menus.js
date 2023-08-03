@@ -24,9 +24,9 @@ export class Menus {
 
   async activate () {
     this.menus = await this.menuService.getAll()
-    if (this.menus.length) {
+    if (this.menus?.length) {
       this.selectedMenu = this.menus[0]
-      if (this.selectedMenu.menuSections.length) {
+      if (this.selectedMenu.menuSections?.length) {
         this.selectedSection = this.selectedMenu.menuSections[0]
       }
     }

@@ -10,10 +10,14 @@ export class Meals {
     this.dialogService = dialogService
     this.mealService = mealService
     this.meals = []
+    this.selectedMeal = null
   }
 
   async activate () {
     this.meals = await this.mealService.getAll()
+    if (this.meals?.length) {
+      this.selectedMeal = this.meals[0]
+    }
   }
 
   createMeal() {
@@ -25,7 +29,12 @@ export class Meals {
       if (!response.wasCancelled) {
         const meal = await this.mealService.create(response.output)
         this.meals.push(meal)
+        this.selectedMeal = meal
       }
     })
+  }
+
+  selectMeal (meal) {
+    this.selectedMeal = meal
   }
 }

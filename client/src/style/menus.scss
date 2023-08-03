@@ -16,13 +16,13 @@
     cursor: pointer;
     box-sizing: border-box;
     border: solid 1px transparent;
-    border-radius: 5px;
 
     &:hover {
+        border-radius: 5px;
         border: solid 1px $primary;
         color: $primary;
     }
-    
+
     &:active {
         background-color: $primary;
         color: var(--bs-body-bg);
@@ -31,6 +31,7 @@
 
 .active-section {
     color: $primary;
+    border-bottom: 1px solid $primary;
 }
 
 .menu-content {

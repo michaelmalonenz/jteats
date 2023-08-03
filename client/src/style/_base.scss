@@ -32,6 +32,10 @@
 
 .nav-item.active {
     border-bottom: 1px solid $primary;
+
+    .nav-link {
+        color: $primary;
+    }
 }
 
 body {

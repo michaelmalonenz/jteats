@@ -14,6 +14,7 @@ class Meal(Base):
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     description: Mapped[Optional[str]] = mapped_column(String(500))
     menu_id: Mapped[int] = mapped_column(ForeignKey("menus.id"))
+    menu: Mapped["Menu"] = relationship()
     order_items: Mapped[List["OrderItem"]] = relationship()
 
     owner: Mapped["User"] = relationship(viewonly=True)
@@ -24,6 +25,7 @@ class Meal(Base):
             'date': self.date,
             'description': self.description,
             'menuId': self.menu_id,
+            'menu': self.menu.to_viewmodel(),
             'ownerId': self.owner_id,
             'orderItems': [x.to_viewmodel() for x in self.order_items],
         }
