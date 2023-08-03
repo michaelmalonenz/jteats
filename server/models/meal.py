@@ -13,6 +13,7 @@ class Meal(Base):
     date: Mapped[datetime.datetime] = mapped_column(DateTime)
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     description: Mapped[Optional[str]] = mapped_column(String(500))
+    menu_id: Mapped[int] = mapped_column(ForeignKey("menus.id"))
     order_items: Mapped[List["OrderItem"]] = relationship()
 
     owner: Mapped["User"] = relationship(viewonly=True)
@@ -22,6 +23,7 @@ class Meal(Base):
             'id': self.id,
             'date': self.date,
             'description': self.description,
+            'menuId': self.menu_id,
             'ownerId': self.owner_id,
             'orderItems': [x.to_viewmodel() for x in self.order_items],
         }
@@ -32,6 +34,7 @@ class Meal(Base):
         meal.id = kwargs.get('id')
         meal.date = kwargs.get('date')
         meal.description = kwargs.get('description')
+        meal.menu_id = kwargs.get('menuId')
         meal.owner_id = kwargs.get('ownerId')
         meal.order_items = [OrderItem.from_viewmodel(**x) for x in kwargs['orderItems']]
         return meal

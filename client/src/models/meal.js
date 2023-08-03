@@ -6,6 +6,7 @@ export class Meal {
         this.description = null
         this.orderItems = []
         this.ownerId = null
+        this.mealId = null
         Object.assign(this, meal)
     }
 

@@ -12,9 +12,11 @@ export class UserDisplay {
         this.model = user
     }
 
+    get id () {
+        return this.model.id
+    }
+
     matches(other) {
-        if (other == null)
-            return false
         return other.user?.id === this.user.id
     }
 }
