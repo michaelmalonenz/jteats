@@ -29,10 +29,41 @@
     }
 }
 
+.active-section {
+    color: $primary;
+}
+
 .menu-content {
+    width: 100%;
     margin-left: 1em;
+    display: flex;
+    flex-direction: column;
 }
 
 .menu-sections-header {
     display: flex;
+}
+
+.menu-sections-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.65em;
+    cursor: pointer;
+}
+
+.menu-item-form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 2px solid $primary;
+
+    &>* {
+        margin-right: 1em;
+    }
 }

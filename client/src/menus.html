@@ -9,7 +9,7 @@
         <div if.bind="!!selectedMenu" class="menu-content">
             <div class="h2">${selectedMenu.restaurant}</div>
             <div class="menu-sections-header">
-                <div class="menu-section-name" repeat.for="section of selectedMenu.menuSections"
+                <div class="menu-section-name ${section.id === selectedSection.id ? 'active-section' : ''}" repeat.for="section of selectedMenu.menuSections"
                      click.delegate="selectSection(section)" dblclick.delegate="editSection(section)">
                     ${section.name}
                 </div>
@@ -17,7 +17,29 @@
                     Add Section <i class="fa fa-plus"></i>
                 </button>
             </div>
-            <div class="menu-sections-content">
+            <div class="menu-sections-content" if.bind="!!selectedSection">
+                <div repeat.for="item of selectedSection.menuItems" class="menu-item" dblclick.delegate="selectItem(item)">
+                    <div>${item.name}</div><div>${item.description}</div><div><span>$</span>${item.price}</div>
+                </div>
+            </div>
+            <div class="menu-item-form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" value.bind="item.name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea value.bind="item.description" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" value.bind="item.price" class="form-control">
+                </div>
+                <div class="menu-item-button-row mt-1">
+                    <button type="button" class="btn btn-outline-primary" click.delegate="saveMenuItem()">
+                        Save <i class="fa-regular fa-floppy-disk"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

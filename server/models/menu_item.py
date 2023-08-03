@@ -1,5 +1,5 @@
 from typing import Optional, List
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ._base import Base
 
@@ -10,6 +10,7 @@ class MenuItem(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
     description: Mapped[Optional[str]] = mapped_column(String(500))
+    price: Mapped[float] = mapped_column(Float)
     menu_section_id: Mapped[int] = mapped_column(ForeignKey("menu_sections.id"))
     menu_section: Mapped["MenuSection"] = relationship(back_populates="menu_items")
 
@@ -18,10 +19,17 @@ class MenuItem(Base):
             'id': self.id,
             'description': self.description,
             'name': self.name,
+            'price': self.price,
             'menuSectionId': self.menu_section_id,
             'menuId': self.menu_section.menu_id,
         }
 
     @staticmethod
     def from_viewmodel(**kwargs):
-        pass
+        result = MenuItem()
+        result.id = kwargs.get('id')
+        result.name = kwargs.get('name')
+        result.description = kwargs.get('description')
+        result.price = kwargs.get('price')
+        result.menu_section_id = kwargs.get('menuSectionId')
+        return result

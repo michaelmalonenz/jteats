@@ -1,7 +1,7 @@
 from flask import g, jsonify, request
 from .app import API_APP
-from repositories import MenuRepository, MenuSectionRepository
-from models import Menu, MenuSection
+from repositories import MenuRepository, MenuSectionRepository, MenuItemRepository
+from models import Menu, MenuSection, MenuItem
 
 
 @API_APP.route('/menus', methods=['GET', 'POST'])
@@ -24,7 +24,7 @@ def update_menu(menu_id):
 
 
 @API_APP.route('/menus/<int:menu_id>/sections', methods=['POST', 'PUT'])
-def add_menu_section(menu_id):
+def menu_section_api(menu_id):
     repo = MenuSectionRepository(g.db_session)
     section = MenuSection.from_viewmodel(**request.json)
     if request.method == 'POST':
@@ -32,3 +32,14 @@ def add_menu_section(menu_id):
     elif request.method == 'PUT':
         section = repo.update(section)
     return jsonify(section.to_viewmodel())
+
+
+@API_APP.route('/menus/<int:menu_id>/sections/<int:menu_section_id>/items', methods=['POST', 'PUT'])
+def menu_item_api(menu_id, menu_section_id):
+    repo = MenuItemRepository(g.db_session)
+    item = MenuItem.from_viewmodel(**request.json)
+    if request.method == 'POST':
+        item = repo.insert(item)
+    elif request.method == 'PUT':
+        item = repo.update(item)
+    return jsonify(item.to_viewmodel())
