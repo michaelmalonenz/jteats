@@ -12,6 +12,8 @@
     </div>
     <div class="meal-content">
       <div class="h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${selectedMeal.menu.restaurant}</div>
+      <meal-menu-section repeat.for="section of selectedMeal.menu.menuSections" section.bind="section" meal.bind="selectedMeal">
+      </meal-menu-section>
     </div>
   </div>
 </template>

@@ -8,5 +8,6 @@ export function configure(config) {
     PLATFORM.moduleName('./select-dropdown'),
     PLATFORM.moduleName('./focus-on-attach'),
     PLATFORM.moduleName('./menu-display'),
+    PLATFORM.moduleName('./meal-menu-section'),
   ]);
 }

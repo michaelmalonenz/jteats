@@ -1,0 +1,29 @@
+.meal-menu-section {
+    padding: 0.5em;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: solid 1px transparent;
+
+    &:hover {
+        border-radius: 5px;
+        border: solid 1px $primary;
+    }
+
+    &:active {
+        background-color: $primary;
+        color: var(--bs-body-bg);
+    }
+}
+
+.meal-menu-item {
+    display: flex;
+    justify-content: space-between;
+
+    &>div {
+        margin-right: 0.5em;
+    }
+
+    &>div:last-child {
+        margin-right: 0;
+    }
+}
