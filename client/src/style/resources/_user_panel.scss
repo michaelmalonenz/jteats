@@ -1,9 +1,46 @@
 .user-panel {
     display: flex;
     align-items: center;
+    position: relative;
+    cursor: pointer;
+    padding: 0.2em;
+    border: 1px solid transparent;
+
+    &:hover {
+        border: 1px solid $primary;
+        border-radius: 5px;
+    }
 }
 
 .user-avatar {
     margin-left: 5px;
     border-radius: 50%;
+}
+
+.user-panel-dropdown {
+    position: absolute;
+    // bottom: 0;
+    // transform: translateY(100%);
+    background-color: var(--bs-body-bg);
+    width: 10em;
+    box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);
+    padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid var(--bs-gray-dark);
+    z-index: 1;
+
+    &:hover {
+        border: 1px solid $primary;
+    }
+
+    &:active {
+        background-color: $primary;
+        color: var(--bs-body-bg);
+    }
+
+    a {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+    }
 }

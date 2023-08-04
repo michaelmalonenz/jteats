@@ -1,7 +1,16 @@
+from datetime import datetime
 from functools import wraps
 import json
 import logging
-from flask import Flask, render_template, g, session, redirect, request, send_from_directory
+from flask import (
+    Flask,
+    render_template,
+    g,
+    session,
+    redirect,
+    request,
+    send_from_directory,
+)
 from flask_session import Session
 from flask_dotenv import DotEnv
 import sqlalchemy
@@ -42,7 +51,14 @@ auth0 = oauth.register(
 )
 
 
+ALLOW_ANONYMOUS = {}
+def allow_anonymous(f):
+    ALLOW_ANONYMOUS[f.__name__] = f
+    return f
+
+
 @app.route('/auth/callback')
+@allow_anonymous
 def callback_handling():
     # Handles response from token endpoint
     auth0.authorize_access_token()
@@ -67,11 +83,17 @@ def callback_handling():
 
 
 @app.route('/login')
+@allow_anonymous
 def login():
     return auth0.authorize_redirect(redirect_uri=oauth_conf['callbackURL'])
 
+
 @app.before_request
-def connect_to_db():
+def before_request():
+    handler = app.view_functions.get(request.url_rule.endpoint, None)
+    if (handler.__name__ not in ALLOW_ANONYMOUS and
+        'profile' not in session):
+        return redirect('/login')
     db = sqlalchemy.create_engine(get_db_url())
     g.db_session = sqlalchemy.orm.Session(db)
     if 'profile' in session:
@@ -80,26 +102,21 @@ def connect_to_db():
 
 @app.teardown_request
 def close_db_connection(err):
-    if g.db_session:
+    if 'db_session' in g:
         g.db_session.close()
 
 
-def requires_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if 'profile' not in session:
-            return redirect('/login')
-        return f(*args, **kwargs)
-
-    return decorated
-
-
 @app.route('/', methods=['GET'])
-@requires_auth
 def index():
     return render_template('index.html')
 
-@requires_auth
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/login')
+
+
 @app.route('/<path:path>', methods=['GET'])
 def send_static(path):
     return send_from_directory('static', path)
