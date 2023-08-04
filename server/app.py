@@ -51,18 +51,17 @@ def callback_handling():
 
     # Store the user information in flask session.
     session['jwt_payload'] = userinfo
-    session['profile'] = {
-        'user_id': userinfo['sub'],
-        'name': userinfo['name'],
-        'picture': userinfo['picture']
-    }
 
-    UserRepository(g.db_session).upsert_external_user(
+    user = UserRepository(g.db_session).upsert_external_user(
         userinfo['sub'],
         userinfo['name'],
         userinfo['nickname'],
         userinfo['picture'],
         userinfo['email'])
+
+    session['profile'] = {
+        'user_id': user.id,
+    }
 
     return redirect('/')
 

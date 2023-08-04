@@ -34,3 +34,5 @@ class UserRepository():
         user.nickname = nickname
         user.picture_url = picture_url
         self.session.commit()
+        self.session.refresh(user)
+        return user

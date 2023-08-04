@@ -1,4 +1,4 @@
-.meal-menu-section {
+.meal-menu-section-name {
     padding: 0.5em;
     cursor: pointer;
     box-sizing: border-box;
@@ -20,6 +20,8 @@
 }
 
 .meal-menu-item {
+    padding: 0.1em;
+    padding-left: 0.5em;
     display: flex;
     justify-content: space-between;
 
@@ -29,5 +31,9 @@
 
     &>div:last-child {
         padding-right: 0;
+    }
+
+    &:hover {
+        color: $primary;
     }
 }

@@ -1,6 +1,8 @@
 import { HttpClient } from 'aurelia-http-client'
 import { inject } from 'aurelia-framework'
 import { Menu } from '../models/menu'
+import { MenuSection } from '../models/menu_section'
+import { MenuItem } from '../models/menu_item'
 
 @inject(HttpClient)
 export class MenuService {
@@ -43,7 +45,9 @@ export class MenuService {
 
   _menuReviver (key, value) {
     if (key !== '' && value != null && typeof value === 'object' && !isNaN(key)) {
-        return new Menu(value)
+      if (key === 'menuItems') return value
+      if (key === 'menuSections') return value
+      return new Menu(value)
     }
     return value
   }

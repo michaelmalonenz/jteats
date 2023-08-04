@@ -7,7 +7,7 @@
             </div>
         </div>
         <div if.bind="!!selectedMenu" class="menu-content">
-            <div class="h2">${selectedMenu.restaurant}</div>
+            <div class="h2">${selectedMenu.restaurant} <small class="fs-5 text-body-secondary">${selectedMenu.description}</small></div>
             <div class="menu-sections-header">
                 <div class="menu-section-name ${section.id === selectedSection.id ? 'active-section' : ''}" repeat.for="section of selectedMenu.menuSections"
                      click.delegate="selectSection(section)" dblclick.delegate="editSection(section)">

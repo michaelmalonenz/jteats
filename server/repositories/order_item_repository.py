@@ -14,11 +14,9 @@ class OrderItemRepository:
     def _get_existing(self, order_item):
         statement = (
             select(OrderItem)
-            .where(
-                OrderItem.meal_id == order_item.meal_id and
-                OrderItem.user_id == order_item.user_id and
-                OrderItem.menu_item_id == order_item.menu_item_id
-            )
+            .where(OrderItem.meal_id == order_item.meal_id)
+            .where(OrderItem.user_id == order_item.user_id)
+            .where(OrderItem.menu_item_id == order_item.menu_item_id)
         )
         return self.session.scalars(statement).one_or_none()
 
@@ -49,6 +47,7 @@ class OrderItemRepository:
     def get_user_items_for_meal(self, meal_id, user_id):
         statement = (
             select(OrderItem)
-            .where(OrderItem.meal_id == meal_id and OrderItem.user_id == user_id)
+            .where(OrderItem.meal_id == meal_id)
+            .where(OrderItem.user_id == user_id)
         )
         return self.session.scalars(statement).all()
