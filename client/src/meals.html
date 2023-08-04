@@ -37,7 +37,9 @@
           <div class="col-2">${item.menuItem.price | currency}</div>
           <div class="col-2">${(item.menuItem.price * item.quantity) | currency}</div>
           <div class="col-1">
-            <icon icon="fa-circle-down" click.delegate="removeItem(item)" title="Remove one from order"></icon>
+            <icon class="order-item-remove-icon" icon="fa-circle-down"
+                  click.delegate="removeItem(item)" title="Remove one from order">
+            </icon>
           </div>
         </div>
       </div>

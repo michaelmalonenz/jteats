@@ -55,6 +55,12 @@ export class Meals {
   }
 
   async removeItem (item) {
-
+    const result = await this.orderItemService.removeOrderItem(item)
+    if (result == null) {
+      const index = this.myOrderItems.indexOf(item)
+      this.myOrderItems.splice(index, 1)
+    } else {
+      Object.assign(item, result)
+    }
   }
 }

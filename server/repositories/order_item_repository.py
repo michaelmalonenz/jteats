@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from models import OrderItem
 
 
@@ -33,6 +33,18 @@ class OrderItemRepository:
         self.session.commit()
         self.session.refresh(order_item)
         return order_item
+
+    def remove_order_item(self, order_item):
+        existing = self._get_existing(order_item)
+        if existing is None:
+            return None
+        existing.quantity -= 1
+        if existing.quantity == 0:
+            statement = delete(OrderItem).where(OrderItem.id == existing.id)
+            self.session.execute(statement)
+            existing = None
+        self.session.commit()
+        return existing
 
     def get_user_items_for_meal(self, meal_id, user_id):
         statement = (

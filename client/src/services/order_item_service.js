@@ -9,14 +9,28 @@ export class OrderItemService {
     this._http = httpClient
   }
 
-  async addOrderItem(orderItem) {
-    const res = this._http
+  async addOrderItem (orderItem) {
+    const res = await this._http
       .createRequest('/api/orderitems')
       .asPost()
       .withContent(orderItem)
       .withReviver(this._orderItemReviver)
       .send()
 
+    return res.content
+  }
+
+  async removeOrderItem (orderItem) {
+    const res = await this._http
+      .createRequest('/api/orderitems')
+      .asDelete()
+      .withContent(orderItem)
+      .withReviver(this._orderItemReviver)
+      .send()
+
+    if (res.content === '') {
+      return null
+    }
     return res.content
   }
 
