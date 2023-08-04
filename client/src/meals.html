@@ -34,8 +34,8 @@
         <div class="order-item row" repeat.for="item of myOrderItems">
           <div class="col-5">${item.menuItem.name}</div>
           <div class="col-2">${item.quantity}</div>
-          <div class="col-2">${item.menuItem.price}</div>
-          <div class="col-2">${item.menuItem.price * item.quantity}</div>
+          <div class="col-2">${item.menuItem.price | currency}</div>
+          <div class="col-2">${(item.menuItem.price * item.quantity) | currency}</div>
           <div class="col-1"><icon icon="fa-remove"></icon></div>
         </div>
       </div>

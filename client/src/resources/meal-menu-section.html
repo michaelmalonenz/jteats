@@ -4,7 +4,7 @@
     <div class="meal-menu-item" repeat.for="item of section.menuItems" if.bind="expanded">
       <div>${item.name}</div>
       <div>${item.description}</div>
-      <div><span>$</span>${item.price}</div>
+      <div>${item.price | currency}</div>
       <div>
         <button type="button" class="btn btn-outline-primary" click.delegate="addToOrder($event, item)">
           <i class="fa fa-plus"></i>

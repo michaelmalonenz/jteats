@@ -9,5 +9,6 @@ export function configure(config) {
     PLATFORM.moduleName('./focus-on-attach'),
     PLATFORM.moduleName('./menu-display'),
     PLATFORM.moduleName('./meal-menu-section'),
+    PLATFORM.moduleName('./currency-value-converter'),
   ]);
 }
