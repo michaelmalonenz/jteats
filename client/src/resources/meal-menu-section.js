@@ -3,6 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { OrderItem } from '../models/order_item'
 import { OrderItemService } from '../services/order_item_service'
 import { AuthorizeStep } from '../security/authorise'
+import { ORDER_ADDED } from '../utils/events'
 
 @inject(EventAggregator, OrderItemService)
 @customElement('meal-menu-section')
@@ -29,5 +30,6 @@ export class MealMenuSection {
             quantity: 1,
         })
         const newOrder = await this.orderItemService.addOrderItem(order)
+        this.eventAggregator.publish(ORDER_ADDED, newOrder)
     }
 }

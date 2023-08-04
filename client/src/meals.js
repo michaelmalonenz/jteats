@@ -5,6 +5,7 @@ import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
 import { OrderItemService } from './services/order_item_service'
 import { AuthorizeStep } from './security/authorise'
+import { ORDER_ADDED } from './utils/events'
 
 @inject(DialogService, EventAggregator, MealService, OrderItemService)
 export class Meals {
@@ -24,6 +25,14 @@ export class Meals {
     if (this.meals?.length) {
       await this.selectMeal(this.meals[0])
     }
+  }
+
+  bind () {
+    this.orderItemAddedSub = this.eventAggregator.subscribe(ORDER_ADDED, this.orderAdded.bind(this))
+  }
+
+  unbind () {
+    this.orderItemAddedSub.dispose()
   }
 
   @computedFrom('selectedMeal')
@@ -61,6 +70,15 @@ export class Meals {
       this.myOrderItems.splice(index, 1)
     } else {
       Object.assign(item, result)
+    }
+  }
+
+  orderAdded (item) {
+    const index = this.myOrderItems.findIndex(x => x.id == item.id)
+    if (index === -1) {
+      this.myOrderItems.push(item)
+    } else {
+      Object.assign(this.myOrderItems[index], item)
     }
   }
 }
