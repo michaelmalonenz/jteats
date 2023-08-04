@@ -1,6 +1,6 @@
 from flask import g, jsonify, request
 from .app import API_APP
-from repositories import MealRepository
+from repositories import MealRepository, OrderItemRepository
 from models import Meal
 
 
@@ -14,3 +14,10 @@ def meals_api():
     elif request.method == 'GET':
         meals = repo.get_all()
         return jsonify([x.to_viewmodel() for x in meals])
+
+
+@API_APP.route('/meals/<int:meal_id>/orderitems', methods=['GET'])
+def meal_order_items(meal_id):
+    repo = OrderItemRepository(g.db_session)
+    items = repo.get_user_items_for_meal(meal_id, g.current_user_id)
+    return jsonify([x.to_viewmodel() for x in items])

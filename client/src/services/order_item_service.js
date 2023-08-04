@@ -1,5 +1,6 @@
 import { HttpClient } from 'aurelia-http-client'
 import { inject } from 'aurelia-framework'
+import { OrderItem } from '../models/order_item'
 
 @inject(HttpClient)
 export class OrderItemService {
@@ -17,5 +18,22 @@ export class OrderItemService {
       .send()
 
     return res.content
+  }
+
+  async getAllForCurrentUserMeal (meal) {
+    const res = await this._http
+      .createRequest(`/api/meals/${meal.id}/orderitems`)
+      .asGet()
+      .withReviver(this._orderItemReviver)
+      .send()
+
+    return res.content
+  }
+
+  _orderItemReviver (key, value) {
+    if (key !== '' && value != null && typeof value === 'object' && !isNaN(key)) {
+      return new OrderItem(value)
+    }
+    return value
   }
 }

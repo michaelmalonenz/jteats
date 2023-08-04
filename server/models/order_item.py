@@ -23,7 +23,8 @@ class OrderItem(Base):
             'quantity': self.quantity,
             'menuItemId': self.menu_item_id,
             'userId': self.user_id,
-            'mealId': self.meal_id
+            'mealId': self.meal_id,
+            'menuItem': self.menu_item.to_viewmodel(),
         }
 
     @staticmethod

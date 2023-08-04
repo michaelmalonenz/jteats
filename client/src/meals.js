@@ -1,23 +1,32 @@
 import { DialogService } from 'aurelia-dialog'
-import { inject } from 'aurelia-framework'
+import { inject, computedFrom } from 'aurelia-framework'
 import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
+import { OrderItemService } from './services/order_item_service'
+import { AuthorizeStep } from './security/authorise'
 
-@inject(DialogService, MealService)
+@inject(DialogService, MealService, OrderItemService)
 export class Meals {
  
-  constructor (dialogService, mealService) {
+  constructor (dialogService, mealService, orderItemService) {
     this.dialogService = dialogService
     this.mealService = mealService
+    this.orderItemService = orderItemService
     this.meals = []
     this.selectedMeal = null
+    this.myOrderItems = []
   }
 
   async activate () {
     this.meals = await this.mealService.getAll()
     if (this.meals?.length) {
-      this.selectedMeal = this.meals[0]
+      await this.selectMeal(this.meals[0])
     }
+  }
+
+  @computedFrom('selectedMeal')
+  get mealOwner () {
+    return this.selectedMeal.ownerId === AuthorizeStep.user.id
   }
 
   createMeal() {
@@ -34,7 +43,12 @@ export class Meals {
     })
   }
 
-  selectMeal (meal) {
+  async selectMeal (meal) {
     this.selectedMeal = meal
+    this.myOrderItems = await this.orderItemService.getAllForCurrentUserMeal(meal)
+  }
+
+  async closeOrders () {
+    
   }
 }

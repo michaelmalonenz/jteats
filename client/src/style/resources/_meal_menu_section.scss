@@ -20,10 +20,10 @@
     justify-content: space-between;
 
     &>div {
-        margin-right: 0.5em;
+        padding-right: 0.5em;
     }
 
     &>div:last-child {
-        margin-right: 0;
+        padding-right: 0;
     }
 }

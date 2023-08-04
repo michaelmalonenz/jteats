@@ -11,9 +11,34 @@
       </div>
     </div>
     <div class="meal-content">
-      <div class="h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${selectedMeal.menu.restaurant}</div>
-      <meal-menu-section repeat.for="section of selectedMeal.menu.menuSections" section.bind="section" meal.bind="selectedMeal">
-      </meal-menu-section>
+      <div class="row">
+        <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${selectedMeal.menu.restaurant}</div>
+        <div class="col-2">
+          <button type="button" class="btn btn-outline-primary" click.delegate="closeOrders()" if.bind="mealOwner">
+            Close Ordering <i class="fa-regular fa-clock"></i>
+          </button>
+        </div>
+      </div>
+      <div class="meal-menu-sections">
+        <meal-menu-section repeat.for="section of selectedMeal.menu.menuSections" section.bind="section" meal.bind="selectedMeal">
+        </meal-menu-section>
+      </div>
+      <div class="my-order-items">
+        <div class="row fw-bold">
+          <div class="col-5">Item</div>
+          <div class="col-2">Quantity</div>
+          <div class="col-2">Price</div>
+          <div class="col-2">Subtotal</div>
+          <div class="col-1"></div>
+        </div>
+        <div class="order-item row" repeat.for="item of myOrderItems">
+          <div class="col-5">${item.menuItem.name}</div>
+          <div class="col-2">${item.quantity}</div>
+          <div class="col-2">${item.menuItem.price}</div>
+          <div class="col-2">${item.menuItem.price * item.quantity}</div>
+          <div class="col-1"><icon icon="fa-remove"></icon></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

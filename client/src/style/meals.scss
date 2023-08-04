@@ -40,3 +40,17 @@
     color: $primary;
     border-bottom: solid 1px $primary;
 }
+
+.meal-menu-sections {
+    flex-grow: 1;
+}
+
+.my-order-items {
+    border-top: 2px solid $primary;
+    margin-bottom: 1em;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+}
