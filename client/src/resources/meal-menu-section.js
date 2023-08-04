@@ -1,16 +1,18 @@
 import { bindable, customElement, inject } from 'aurelia-framework'
+import { EventAggregator } from 'aurelia-event-aggregator'
 import { OrderItem } from '../models/order_item'
 import { OrderItemService } from '../services/order_item_service'
 import { AuthorizeStep } from '../security/authorise'
 
-@inject(OrderItemService)
+@inject(EventAggregator, OrderItemService)
 @customElement('meal-menu-section')
 export class MealMenuSection {
     @bindable meal = null
     @bindable section = null
     expanded = false
 
-    constructor (orderItemService) {
+    constructor (eventAggregator, orderItemService) {
+        this.eventAggregator = eventAggregator
         this.orderItemService = orderItemService
     }
 

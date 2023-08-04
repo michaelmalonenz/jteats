@@ -1,14 +1,12 @@
 <template>
   <div class="meal-menu-section" click.delegate="toggleExpand()">
     <div class="meal-menu-section-name">${section.name}</div>
-    <div class="meal-menu-item" repeat.for="item of section.menuItems" if.bind="expanded">
-      <div>${item.name}</div>
-      <div>${item.description}</div>
-      <div>${item.price | currency}</div>
-      <div>
-        <button type="button" class="btn btn-outline-primary" click.delegate="addToOrder($event, item)">
-          <i class="fa fa-plus"></i>
-        </button>
+    <div class="row meal-menu-item" repeat.for="item of section.menuItems" if.bind="expanded">
+      <div class="col-3">${item.name}</div>
+      <div class="col-6">${item.description}</div>
+      <div class="col-2">${item.price | currency}</div>
+      <div class="col-1">
+        <icon title="Add one to order" icon="fa-circle-up" click.delegate="addToOrder($event, item)"></icon>
       </div>
     </div>
   </div>

@@ -1,15 +1,17 @@
 import { DialogService } from 'aurelia-dialog'
 import { inject, computedFrom } from 'aurelia-framework'
+import { EventAggregator } from 'aurelia-event-aggregator'
 import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
 import { OrderItemService } from './services/order_item_service'
 import { AuthorizeStep } from './security/authorise'
 
-@inject(DialogService, MealService, OrderItemService)
+@inject(DialogService, EventAggregator, MealService, OrderItemService)
 export class Meals {
  
-  constructor (dialogService, mealService, orderItemService) {
+  constructor (dialogService, eventAggregator, mealService, orderItemService) {
     this.dialogService = dialogService
+    this.eventAggregator = eventAggregator
     this.mealService = mealService
     this.orderItemService = orderItemService
     this.meals = []
@@ -49,6 +51,10 @@ export class Meals {
   }
 
   async closeOrders () {
-    
+
+  }
+
+  async removeItem (item) {
+
   }
 }
