@@ -32,7 +32,7 @@ export class MealEditor {
   async activate () {
     const users = await this.userService.getAll()
     this.users = users.map(user => new UserDisplay(user))
-    this.user = this.users.find(user => user.id === AuthorizeStep.user?.id)
+    this.user = this.users.find(user => user.id === AuthorizeStep.user.id)
 
     const menus = await this.menuService.getAll()
     this.menus = menus.map(menu => new MenuDisplay(menu))

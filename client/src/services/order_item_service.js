@@ -9,7 +9,7 @@ export class OrderItemService {
     this._http = httpClient
   }
 
-  async create(orderItem) {
+  async addOrderItem(orderItem) {
     const res = this._http
       .createRequest('/api/orderitems')
       .asPost()

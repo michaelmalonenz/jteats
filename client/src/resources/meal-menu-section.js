@@ -24,7 +24,8 @@ export class MealMenuSection {
             userId: AuthorizeStep.user.id,
             mealId: this.meal.id,
             menuItemId: item.id,
+            quantity: 1,
         })
-        const newOrder = await this.orderItemService.create(order)
+        const newOrder = await this.orderItemService.addOrderItem(order)
     }
 }
