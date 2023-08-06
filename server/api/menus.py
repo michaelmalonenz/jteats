@@ -15,11 +15,14 @@ def menus_api():
         return jsonify([menu.to_viewmodel() for menu in repo.get_all()])
 
 
-@API_APP.route('/menus/<int:menu_id>', methods=['PUT'])
+@API_APP.route('/menus/<int:menu_id>', methods=['PUT', 'GET'])
 def update_menu(menu_id):
     repo = MenuRepository(g.db_session)
-    menu = Menu.from_viewmodel(**request.json)
-    menu = repo.update(menu)
+    if request.method == 'GET':
+        menu = repo.get_by_id(menu_id)
+    elif request.method == 'PUT':
+        menu = Menu.from_viewmodel(**request.json)
+        menu = repo.update(menu)
     return jsonify(menu.to_viewmodel())
 
 

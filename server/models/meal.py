@@ -15,7 +15,6 @@ class Meal(Base):
     description: Mapped[Optional[str]] = mapped_column(String(500))
     closed: Mapped[bool] = mapped_column(Boolean, default=False)
     menu_id: Mapped[int] = mapped_column(ForeignKey("menus.id"))
-    menu: Mapped["Menu"] = relationship()
     owner: Mapped["User"] = relationship(viewonly=True)
 
     def to_viewmodel(self):
@@ -25,7 +24,6 @@ class Meal(Base):
             'description': self.description,
             'closed': self.closed,
             'menuId': self.menu_id,
-            'menu': self.menu.to_viewmodel(),
             'ownerId': self.owner_id,
         }
 

@@ -12,7 +12,7 @@
     </div>
     <div class="meal-content" if.bind="!selectedMeal.closed">
       <div class="row">
-        <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${selectedMeal.menu.restaurant}</div>
+        <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${menu.restaurant}</div>
         <div class="col-2">
           <button type="button" class="btn btn-outline-primary" click.delegate="closeOrders()" if.bind="mealOwner">
             Close Ordering <i class="fa-regular fa-clock"></i>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="meal-menu-sections">
-        <meal-menu-section repeat.for="section of selectedMeal.menu.menuSections" section.bind="section" meal.bind="selectedMeal">
+        <meal-menu-section repeat.for="section of menu.menuSections" section.bind="section" meal.bind="selectedMeal">
         </meal-menu-section>
       </div>
       <div class="my-order-items">
@@ -47,7 +47,7 @@
 
     <div class="meal-content" if.bind="selectedMeal.closed">
       <div class="row">
-        <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${selectedMeal.menu.restaurant}</div>
+        <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${menu.restaurant}</div>
       </div>
       <div class="row" repeat.for="item of allOrderItems">
         <div class="col-md-4 col-sm-6">${item.menuItem.name}</div>

@@ -11,6 +11,10 @@ class MenuRepository:
         statement = select(Menu)
         return self.session.scalars(statement).all()
 
+    def get_by_id(self, menu_id):
+        statement = select(Menu).where(Menu.id == menu_id)
+        return self.session.scalars(statement).one()
+
     def insert(self, menu):
         self.session.add(menu)
         self.session.commit()

@@ -3,18 +3,20 @@ import { inject, computedFrom } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
+import { MenuService } from './services/menu'
 import { OrderItemService } from './services/order_item_service'
 import { AuthorizeStep } from './security/authorise'
 import { ORDER_ADDED } from './utils/events'
 
-@inject(DialogService, EventAggregator, MealService, OrderItemService)
+@inject(DialogService, EventAggregator, MealService, OrderItemService, MenuService)
 export class Meals {
  
-  constructor (dialogService, eventAggregator, mealService, orderItemService) {
+  constructor (dialogService, eventAggregator, mealService, orderItemService, menuService) {
     this.dialogService = dialogService
     this.eventAggregator = eventAggregator
     this.mealService = mealService
     this.orderItemService = orderItemService
+    this.menuService = menuService
     this.meals = []
     this.selectedMeal = null
     this.myOrderItems = []
@@ -56,7 +58,7 @@ export class Meals {
     }).whenClosed(async (response) => {
       if (!response.wasCancelled) {
         const meal = await this.mealService.create(response.output)
-        this.meals.push(meal)
+        this.meals.unshift(meal)
         this.selectedMeal = meal
       }
     })
@@ -64,6 +66,7 @@ export class Meals {
 
   async selectMeal (meal) {
     this.selectedMeal = meal
+    this.menu = await this.menuService.getMenu(meal.menuId)
     if (meal.closed) {
       this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
     } else {

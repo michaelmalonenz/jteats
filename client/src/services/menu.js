@@ -22,6 +22,16 @@ export class MenuService {
     return res.content
   }
 
+  async getMenu (menu_id) {
+    const res = await this._http
+      .createRequest(`/api/menus/${menu_id}`)
+      .asGet()
+      .withReviver(this._menuReviver)
+      .send()
+
+    return res.content
+  }
+
   async getAll () {
     const res = await this._http
         .createRequest('/api/menus')
