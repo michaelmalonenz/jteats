@@ -68,7 +68,8 @@ export class Meals {
     this.selectedMeal = meal
     this.menu = await this.menuService.getMenu(meal.menuId)
     if (meal.closed) {
-      this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
+       const orderItems = await this.orderItemService.getOrderItemsForMeal(meal)
+       this.allOrderItems = this.aggregateOrderItems(orderItems)
     } else {
       this.myOrderItems = await this.orderItemService.getAllForCurrentUserMeal(meal)
     }
@@ -95,5 +96,18 @@ export class Meals {
     } else {
       Object.assign(this.myOrderItems[index], item)
     }
+  }
+
+  aggregateOrderItems (orderItems) {
+    const results = []
+    for (const item of orderItems) {
+      const result = results.find(x => x.menuItem.id == item.menuItem.id)
+      if (result == null) {
+        results.push(item)
+      } else {
+        result.quantity += item.quantity
+      }
+    }
+    return results
   }
 }
