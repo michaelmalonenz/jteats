@@ -40,7 +40,7 @@ export class Meals {
 
   @computedFrom('selectedMeal')
   get mealOwner () {
-    return this.selectedMeal.ownerId === AuthorizeStep.user.id
+    return this.selectedMeal && this.selectedMeal.ownerId === AuthorizeStep.user.id
   }
 
   @computedFrom('allOrderItems')

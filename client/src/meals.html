@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <div class="meal-content" if.bind="!selectedMeal.closed">
+    <div class="meal-content" if.bind="!!selectedMeal && !selectedMeal.closed">
       <div class="row">
         <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${menu.restaurant}</div>
         <div class="col-2">

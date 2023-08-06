@@ -7,3 +7,4 @@ requests
 pgmigrate
 sqlalchemy
 alembic
+gunicorn
