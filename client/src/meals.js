@@ -18,6 +18,7 @@ export class Meals {
     this.meals = []
     this.selectedMeal = null
     this.myOrderItems = []
+    this.allOrderItems = []
   }
 
   async activate () {
@@ -40,6 +41,13 @@ export class Meals {
     return this.selectedMeal.ownerId === AuthorizeStep.user.id
   }
 
+  @computedFrom('allOrderItems')
+  get totalCost () {
+    return this.allOrderItems.reduce((accumulator, orderItem) => {
+      return accumulator + (orderItem.quantity * orderItem.menuItem.price)
+    }, 0)
+  }
+
   createMeal() {
     this.dialogService.open({
       viewModel: MealEditor,
@@ -56,11 +64,15 @@ export class Meals {
 
   async selectMeal (meal) {
     this.selectedMeal = meal
-    this.myOrderItems = await this.orderItemService.getAllForCurrentUserMeal(meal)
+    if (meal.closed) {
+      this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
+    } else {
+      this.myOrderItems = await this.orderItemService.getAllForCurrentUserMeal(meal)
+    }
   }
 
   async closeOrders () {
-
+    this.selectedMeal = await this.mealService.closeOrders(this.selectedMeal)
   }
 
   async removeItem (item) {

@@ -16,8 +16,22 @@ def meals_api():
         return jsonify([x.to_viewmodel() for x in meals])
 
 
-@API_APP.route('/meals/<int:meal_id>/orderitems', methods=['GET'])
-def meal_order_items(meal_id):
+@API_APP.route('/meals/<int:meal_id>/orderitems/user', methods=['GET'])
+def meal_user_order_items(meal_id):
     repo = OrderItemRepository(g.db_session)
     items = repo.get_user_items_for_meal(meal_id, g.current_user_id)
     return jsonify([x.to_viewmodel() for x in items])
+
+
+@API_APP.route('/meals/<int:meal_id>/orderitems', methods=['GET'])
+def meal_order_items(meal_id):
+    repo = OrderItemRepository(g.db_session)
+    items = repo.get_order_items_for_meal(meal_id)
+    return jsonify([x.to_viewmodel() for x in items])
+
+
+@API_APP.route('/meals/<int:meal_id>/closeorders', methods=['POST'])
+def meal_close_orders(meal_id):
+    repo = MealRepository(g.db_session)
+    meal = repo.close_orders(meal_id)
+    return jsonify(meal.to_viewmodel())

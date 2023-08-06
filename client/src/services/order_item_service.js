@@ -36,6 +36,16 @@ export class OrderItemService {
 
   async getAllForCurrentUserMeal (meal) {
     const res = await this._http
+      .createRequest(`/api/meals/${meal.id}/orderitems/user`)
+      .asGet()
+      .withReviver(this._orderItemReviver)
+      .send()
+
+    return res.content
+  }
+
+  async getOrderItemsForMeal (meal) {
+    const res = await this._http
       .createRequest(`/api/meals/${meal.id}/orderitems`)
       .asGet()
       .withReviver(this._orderItemReviver)

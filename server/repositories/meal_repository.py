@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update
 from models import Meal
 
 
@@ -16,3 +16,14 @@ class MealRepository:
         self.session.commit()
         self.session.refresh(meal)
         return meal
+
+    def close_orders(self, meal_id):
+        statement = (
+            update(Meal)
+            .where(Meal.id == meal_id)
+            .values(closed=True)
+            .returning(Meal)
+        )
+        order = self.session.scalars(statement).one()
+        self.session.commit()
+        return order

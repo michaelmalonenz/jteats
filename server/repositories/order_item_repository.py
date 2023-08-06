@@ -1,5 +1,9 @@
 from sqlalchemy import select, delete
-from models import OrderItem
+from models import OrderItem, Meal
+
+
+class MealClosedException(Exception):
+    pass
 
 
 class OrderItemRepository:
@@ -12,6 +16,12 @@ class OrderItemRepository:
         return self.session.scalars(statement).all()
 
     def _get_existing(self, order_item):
+        statement = select(Meal).where(Meal.id == order_item.meal_id)
+        meal = self.session.scalars(statement).one()
+        if meal.closed:
+            raise MealClosedException(
+                "Can't alter an order after the meal ordering has been closed"
+            )
         statement = (
             select(OrderItem)
             .where(OrderItem.meal_id == order_item.meal_id)
@@ -49,5 +59,12 @@ class OrderItemRepository:
             select(OrderItem)
             .where(OrderItem.meal_id == meal_id)
             .where(OrderItem.user_id == user_id)
+        )
+        return self.session.scalars(statement).all()
+
+    def get_order_items_for_meal(self, meal_id):
+        statement = (
+            select(OrderItem)
+            .where(OrderItem.meal_id == meal_id)
         )
         return self.session.scalars(statement).all()

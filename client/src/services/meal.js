@@ -32,6 +32,16 @@ export class MealService {
     return res.content
   }
 
+  async closeOrders (meal) {
+    const res = await this._http
+      .createRequest(`/api/meals/${meal.id}/closeorders`)
+      .asPost()
+      .withReviver(this._mealReviver)
+      .send()
+
+    return res.content
+  }
+
   _mealReviver(key, value) {
     if (key !== '' && value != null && typeof value === 'object' && isNaN(key)) {
       if (key === 'orderItems') return value
