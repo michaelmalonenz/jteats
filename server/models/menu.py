@@ -12,7 +12,7 @@ class Menu(Base):
     restaurant: Mapped[Optional[str]] = mapped_column(String(100))
     description: Mapped[Optional[str]] = mapped_column(String(500))
     menu_sections: Mapped[List["MenuSection"]] = relationship(
-        back_populates="menu", cascade="all, delete-orphan"
+        back_populates="menu", cascade="all, delete-orphan", order_by="MenuSection.id"
     )
 
     def to_viewmodel(self):
