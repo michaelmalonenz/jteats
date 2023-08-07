@@ -30,6 +30,7 @@ export class App {
     config.map([
       { route: ['', 'meals'], name: 'Meals', moduleId: PLATFORM.moduleName('meals'), nav: true, title: 'Meals', auth: true, settings: { icon: 'fa-cutlery' } },
       { route: ['menus'],     name: 'Menus', moduleId: PLATFORM.moduleName('menus'), nav: true, title: 'Menus', auth: true, settings: { icon: 'fa-book' } },
+      { route: ['help'],      name: 'Help',  moduleId: PLATFORM.moduleName('help'),  nav: true, title: 'Help',  auth: true, settings: { icon: 'fa-question' } },
     ])
 
     this.router = router

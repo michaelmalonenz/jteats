@@ -68,8 +68,8 @@ export class Meals {
     this.selectedMeal = meal
     this.menu = await this.menuService.getMenu(meal.menuId)
     if (meal.closed) {
-       const orderItems = await this.orderItemService.getOrderItemsForMeal(meal)
-       this.allOrderItems = this.aggregateOrderItems(orderItems)
+       this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
+       this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
     } else {
       this.myOrderItems = await this.orderItemService.getAllForCurrentUserMeal(meal)
     }

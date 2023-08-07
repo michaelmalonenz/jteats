@@ -49,7 +49,7 @@
       <div class="row">
         <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${menu.restaurant}</div>
       </div>
-      <div class="row" repeat.for="item of allOrderItems">
+      <div class="row" repeat.for="item of aggregatedOrderItems">
         <div class="col-md-4 col-sm-6">${item.menuItem.name}</div>
         <div class="col-md-1 col-sm-2 text-center">${item.quantity}</div>
         <div class="col-md-1 col-sm-2 text-center">${(item.menuItem.price * item.quantity) | currency}</div>
@@ -57,6 +57,14 @@
       <div class="row">
         <div class="total text-center col-md-1 col-sm-2 offset-md-4 offset-sm-6">Total: </div>
         <div class="total text-center col-md-1 col-sm-2">${totalCost | currency}</div>
+      </div>
+    </div>
+
+    <div class="meal-content" if.bind="selectedMeal.ordered">
+      <div class="row">
+        <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${menu.restaurant}</div>
+      </div>
+      <div class="row" repeat.for="item of allOrderItems">
       </div>
     </div>
   </div>

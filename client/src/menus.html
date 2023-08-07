@@ -18,8 +18,10 @@
                 </button>
             </div>
             <div class="menu-sections-content" if.bind="!!selectedSection">
-                <div repeat.for="item of selectedSection.menuItems" class="menu-item" dblclick.delegate="selectItem(item)">
-                    <div>${item.name}</div><div>${item.description}</div><div>${item.price | currency}</div>
+                <div class="row" repeat.for="item of selectedSection.menuItems" class="menu-item" dblclick.delegate="selectItem(item)">
+                    <div class="col-4">${item.name}</div>
+                    <div class="col-7">${item.description}</div>
+                    <div class="col-1">${item.price | currency}</div>
                 </div>
             </div>
             <div class="menu-item-form">

@@ -9,4 +9,8 @@ export class NavBar {
     return AuthorizeStep.user != null
   }
 
+  get isLoading () {
+    return this.router.isNavigating
+  }
+
 }
