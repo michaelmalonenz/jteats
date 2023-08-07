@@ -18,6 +18,7 @@ export class MealEditor {
     this.userService = userService
     this.menuService = menuService
     this.element = element
+    this.id = null
     this.date = moment()
     this.max = moment().add(4, 'weeks')
     this.description = ''
@@ -29,18 +30,27 @@ export class MealEditor {
     this.boundKeyDown = this.keydown.bind(this)
   }
 
-  async activate () {
+  async activate (model) {
     const users = await this.userService.getAll()
     this.users = users.map(user => new UserDisplay(user))
-    this.user = this.users.find(user => user.id === AuthorizeStep.user.id)
 
     const menus = await this.menuService.getAll()
     this.menus = menus.map(menu => new MenuDisplay(menu))
     this.menu = this.menus[0]
+
+    if (model) {
+      this.id = model.id
+      this.date = model.date
+      this.description = model.description
+      this.owner = this.users.find(user => user.id === model.ownerId)
+    } else {
+      this.owner = this.users.find(user => user.id === AuthorizeStep.user.id)
+    }
   }
   
   save () {
     this.controller.ok(new Meal({
+      id: this.id,
       date: this.date.format('YYYY-MM-DD'),
       description: this.description,
       ownerId: this.owner.id,

@@ -5,7 +5,7 @@
           class="fa fa-plus"></i></button>
       <div repeat.for="meal of meals">
         <div class="meal-selector ${selectedMeal.id === meal.id ? 'active-meal' : ''}"
-          click.delegate="selectMeal(meal)">
+          click.delegate="selectMeal(meal)" dblclick.delegate="editMeal(meal)">
           ${meal.date.format('YYYY-MM-DD')}
         </div>
       </div>

@@ -53,13 +53,26 @@ export class Meals {
   createMeal() {
     this.dialogService.open({
       viewModel: MealEditor,
-      model: {},
+      model: null,
       lock: true
     }).whenClosed(async (response) => {
       if (!response.wasCancelled) {
         const meal = await this.mealService.create(response.output)
         this.meals.unshift(meal)
         this.selectedMeal = meal
+      }
+    })
+  }
+
+  async editMeal (meal) {
+    this.dialogService.open({
+      viewModel: MealEditor,
+      model: meal,
+      lock: true
+    }).whenClosed(async (response) => {
+      if (!response.wasCancelled) {
+        const updated = await this.mealService.update(response.output)
+        Object.assign(meal, updated)
       }
     })
   }

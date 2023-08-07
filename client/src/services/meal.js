@@ -22,6 +22,17 @@ export class MealService {
     return res.content
   }
 
+  async update (meal) {
+    const res = await this._http
+      .createRequest(`/api/meals/${meal.id}`)
+      .asPut()
+      .withContent(meal)
+      .withReviver(this._mealReviver)
+      .send()
+
+      return res.conent
+  }
+
   async getAll() {
     const res = await this._http
       .createRequest('/api/meals')

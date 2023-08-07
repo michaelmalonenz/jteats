@@ -11,6 +11,23 @@ class MealRepository:
         statement = select(Meal).order_by(Meal.date.desc())
         return self.session.scalars(statement).all()
 
+    def update(self, meal):
+        statement = (
+            update(Meal)
+            .where(Meal.id == meal.id)
+            .values(
+                date=meal.date,
+                description=meal.description,
+                owner_id=meal.owner_id,
+                menu_id=meal.menu_id
+            )
+            .returning(Meal)
+        )
+        meal = self.session.scalars(statement).one()
+        self.session.commit()
+
+        return meal
+
     def insert(self, meal):
         self.session.add(meal)
         self.session.commit()

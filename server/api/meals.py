@@ -16,6 +16,14 @@ def meals_api():
         return jsonify([x.to_viewmodel() for x in meals])
 
 
+@API_APP.route('/meals/<int:meal_id>', methods=['PUT'])
+def update_meal(meal_id):
+    repo = MealRepository(g.db_session)
+    meal = Meal.from_viewmodel(**request.json)
+    meal = repo.update(meal)
+    return jsonify(meal.to_viewmodel())
+
+
 @API_APP.route('/meals/<int:meal_id>/orderitems/user', methods=['GET'])
 def meal_user_order_items(meal_id):
     repo = OrderItemRepository(g.db_session)
