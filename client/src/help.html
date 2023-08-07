@@ -1,3 +1,57 @@
 <template>
-    <p>All hope is lost; you won't find any help here.</p>
+    <h2>JTEats <small>A meal order aggregation system</small></h2>
+
+    <h4>Meals</h4>
+    <p>The workflow is that a person creates a meal to happen on a particular date.
+        The restaurant will be chosen as part of meal creation, along with the owner.</p>
+    <p>After the meal is created, Users will log in and select the correct meal represented by the date on
+        the left-hand panel.  Then they will look through the menu and choose the item(s) they desire. 
+        Selection is made by clicking the 'up' arrow to the right of the menu item.  The user's current selection
+        of Order Items will be listed at the bottom of the screen.  Each click will increase the quantity of that
+        Order Item by one.
+    </p>
+    <p>
+        If the user changes their mind, the order items shown at the bottom of the screen can be removed by
+        clicking the down arrow.  Each click will decrease the quantity by one and when the quantity reaches zero,
+        the item will be removed.  
+    </p>
+    <p>When the Meal Owner is ready to place the order with the restaurant, they will click a button to
+        close ordering.  After this point, no more changes to the order items can be made for the meal.
+        After the ordering is closed for the meal, the meal display will change to an aggregation of the
+        order items, allowing the Meal Owner to rattle off a straight-forward order over the phone, without
+        miscounting the number of each Menu Item to be ordered.  It will also tally the cost for easy reference.
+    </p>
+    <h4>Menus</h4>
+    <p>Menus can be created with the 'Create' button on the left panel by anyone.  Double-clicking the
+        item in the left panel will bring up the edit dialog.
+    </p>
+    <p>Once a menu has been created, Menu Sections can be added with the 'Add Section' button.  Clicking that
+        button will pop up a dialog, asking for a name and a description.  Double-clicking the section name
+        will bring up the edit dialog.
+    </p>
+    <p>Menu Items can be added by using the form at the bottom.  The items will be added to the currently 
+        selected section. Double-clicking the item will populate the form at the bottom, and any changes will be
+        saved to the original (it will be edited).
+    </p>
+    <h4>Glossary</h4>
+    <div>User: any individual who has logged in to JTEats</div>
+    <div>Meal: represents the grouping of orders, to be ordered from a restaurant on a particular day</div>
+    <div>Menu: represents the items that can be ordered from a restaurant</div>
+    <div>Menu Section: a grouping of menu items</div>
+    <div>Menu Item: an individual item able to be ordered from the restaurant</div>
+    <div>Order Item: the quantity of Menu Items a User wants to order</div>
+    <div>Meal Owner: the person who is running the show - ordering the food and gathering the payments</div>
+
+    <h4>Known Issues</h4>
+    <ul>
+        <li>There is no validation on any forms</li>
+        <li>There is no feedback when an error happens on the API</li>
+        <li>When the Meal Owner closes ordering, there is no indication to you that this has happened until you
+            reload the page.
+        </li>
+        <li>There is no indication of who has selected an item to order</li>
+        <li>There is no readout of who ordered what</li>
+        <li>There is no way to trigger a notification with payment details</li>
+        <li>Nothing can be deleted</li>
+    </ul>
 </template>
