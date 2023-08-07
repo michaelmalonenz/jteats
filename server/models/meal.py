@@ -16,6 +16,8 @@ class Meal(Base):
     closed: Mapped[bool] = mapped_column(Boolean, default=False)
     menu_id: Mapped[int] = mapped_column(ForeignKey("menus.id"))
     owner: Mapped["User"] = relationship(viewonly=True)
+    deleted: Mapped[bool] = mapped_column(Boolean, default=False)
+    ordered: Mapped[bool] = mapped_column(Boolean, default=False)
 
     def to_viewmodel(self):
         return {
@@ -25,6 +27,7 @@ class Meal(Base):
             'closed': self.closed,
             'menuId': self.menu_id,
             'ownerId': self.owner_id,
+            'ordered': self.ordered,
         }
 
     @staticmethod
@@ -36,4 +39,5 @@ class Meal(Base):
         meal.closed = kwargs.get('closed')
         meal.menu_id = kwargs.get('menuId')
         meal.owner_id = kwargs.get('ownerId')
+        meal.ordered = kwargs.get('ordered')
         return meal

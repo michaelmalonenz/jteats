@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert, update
+from sqlalchemy import select, insert, update, func
 from models import Meal
 
 
@@ -8,13 +8,18 @@ class MealRepository:
         self.session = session
 
     def get_all(self):
-        statement = select(Meal).order_by(Meal.date.desc())
+        statement = (
+            select(Meal)
+            .where(Meal.deleted == False)
+            .order_by(Meal.date.desc())
+        )
         return self.session.scalars(statement).all()
 
     def update(self, meal):
         statement = (
             update(Meal)
             .where(Meal.id == meal.id)
+            .where(Meal.deleted == False)
             .values(
                 date=meal.date,
                 description=meal.description,
@@ -27,6 +32,11 @@ class MealRepository:
         self.session.commit()
 
         return meal
+
+    def delete(self, meal_id):
+        statement = update(Meal).where(Meal.id == meal_id).values(deleted=True)
+        self.session.execute(statement)
+        self.session.commit()
 
     def insert(self, meal):
         self.session.add(meal)

@@ -16,12 +16,16 @@ def meals_api():
         return jsonify([x.to_viewmodel() for x in meals])
 
 
-@API_APP.route('/meals/<int:meal_id>', methods=['PUT'])
+@API_APP.route('/meals/<int:meal_id>', methods=['PUT', 'DELETE'])
 def update_meal(meal_id):
     repo = MealRepository(g.db_session)
-    meal = Meal.from_viewmodel(**request.json)
-    meal = repo.update(meal)
-    return jsonify(meal.to_viewmodel())
+    if request.method == 'PUT':
+        meal = Meal.from_viewmodel(**request.json)
+        meal = repo.update(meal)
+        return jsonify(meal.to_viewmodel())
+    elif request.method == 'DELETE':
+        repo.delete(meal_id)
+        return ('', 200)
 
 
 @API_APP.route('/meals/<int:meal_id>/orderitems/user', methods=['GET'])
