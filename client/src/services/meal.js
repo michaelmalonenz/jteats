@@ -33,6 +33,13 @@ export class MealService {
       return res.conent
   }
 
+  async delete (meal_id) {
+    await this._http
+      .createRequest(`/api/meals/${meal_id}`)
+      .asDelete()
+      .send()
+  }
+
   async getAll() {
     const res = await this._http
       .createRequest('/api/meals')

@@ -6,17 +6,19 @@ import { UserService } from '../services/user'
 import { UserDisplay } from '../resources/user-display'
 import { MenuDisplay } from '../resources/menu-display'
 import { MenuService } from '../services/menu'
+import { MealService } from '../services/meal'
 import { AuthorizeStep } from '../security/authorise'
 
-@inject(DialogController, UserService, MenuService, DOM.Element)
+@inject(DialogController, UserService, MenuService, MealService, DOM.Element)
 export class MealEditor {
 
   heading = 'Create Meal'
 
-  constructor (dialogController, userService, menuService, element) {
+  constructor (dialogController, userService, menuService, mealService, element) {
     this.controller = dialogController
     this.userService = userService
     this.menuService = menuService
+    this.mealService = mealService
     this.element = element
     this.id = null
     this.date = moment()
@@ -39,6 +41,7 @@ export class MealEditor {
     this.menu = this.menus[0]
 
     if (model) {
+      this.heading = "Edit Meal"
       this.id = model.id
       this.date = model.date
       this.description = model.description
@@ -74,5 +77,10 @@ export class MealEditor {
 
   detached () {
     this.element.removeEventListener('keydown', this.boundKeyDown)
+  }
+
+  async deleteMeal () {
+    await this.mealService.delete(this.id)
+    this.controller.cancel()
   }
 }
