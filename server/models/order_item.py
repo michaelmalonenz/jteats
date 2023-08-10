@@ -25,6 +25,7 @@ class OrderItem(Base):
             'userId': self.user_id,
             'mealId': self.meal_id,
             'menuItem': self.menu_item.to_viewmodel(),
+            'user': self.user.to_viewmodel(),
         }
 
     @staticmethod
