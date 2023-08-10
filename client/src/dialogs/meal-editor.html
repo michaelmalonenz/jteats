@@ -20,17 +20,19 @@
       </div>
       <div class="row mt-3">
         <div class="col-md-12">
-          <div class="form-group">
+          <div class="form-group" validation-errors.bind="menuErrors">
             <label>Restaurant</label>
-            <select-dropdown class="form-control" options.bind="menus" value.bind="menu"></select-dropdown>
+            <select-dropdown class="form-control ${menuErrors.length ? 'is-invalid': ''}" options.bind="menus" value.bind="menu & validate">
+            </select-dropdown>
           </div>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-md-12">
-          <div class="form-group">
+          <div class="form-group" validation-errors.bind="ownerErrors">
             <label>Owner</label>
-            <select-dropdown class="form-control" options.bind="users" value.bind="owner"></select-dropdown>
+            <select-dropdown class="form-control ${ownerErrors.length ? 'is-invalid' : ''}" options.bind="users" value.bind="owner & validate">
+            </select-dropdown>
           </div>
         </div>
       </div>

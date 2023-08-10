@@ -7,6 +7,7 @@ export function configure(aurelia) {
     .plugin(PLATFORM.moduleName('aurelia-dialog'), (config) => {
       config.settings.keyboard = ['Escape']
     })
+    .plugin(PLATFORM.moduleName('aurelia-validation'))
     .feature(PLATFORM.moduleName('resources/index'))
     .feature(PLATFORM.moduleName('dialogs/index'))
     .globalResources([

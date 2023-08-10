@@ -1,5 +1,6 @@
-import { inject, computedFrom } from 'aurelia-framework'
+import { inject, NewInstance } from 'aurelia-framework'
 import { DialogService } from 'aurelia-dialog'
+import { ValidationController, ValidationRules } from 'aurelia-validation'
 import { MenuService } from './services/menu'
 import { MenuSectionService } from './services/menu_section_service'
 import { MenuEditor } from './dialogs/menu-editor'
@@ -7,19 +8,26 @@ import { MenuSectionEditor } from './dialogs/menu-section-editor'
 import { MenuItem } from './models/menu_item'
 import { MenuItemService } from './services/menu_item_service'
 
-@inject(DialogService, MenuService, MenuSectionService, MenuItemService)
+@inject(DialogService, MenuService, MenuSectionService, MenuItemService, NewInstance.of(ValidationController))
 export class Menus {
 
-  constructor(dialogService, menuService, menuSectionService, menuItemService) {
+  constructor(dialogService, menuService, menuSectionService, menuItemService, validationController) {
     this.dialogService = dialogService
     this.menuService = menuService
     this.menuSectionService = menuSectionService
     this.menuItemService = menuItemService
+    this.validationController = validationController
     this.menus = []
     this.selectedMenu = null
     this.selectedSection = null
 
     this.item = new MenuItem()
+
+    this.validationRules = ValidationRules
+      .ensure('name').required()
+      .rules
+
+    this.validationController.addObject(this.item, this.validationRules)
   }
 
   async activate () {
@@ -103,17 +111,22 @@ export class Menus {
     const isNew = !this.item.id
     this.item.menuId = this.selectedMenu.id
     this.item.menuSectionId = this.selectedSection.id
-    if (isNew) {
-      const newItem = await this.menuItemService.create(this.item)
-      this.selectedSection.menuItems.push(newItem)
-    } else {
-      const updated = await this.menuItemService.update(this.item)
-      const index = this.selectedSection.menuItems.findIndex((menuItem) => menuItem?.id === this.item.id)
-      if (index !== -1) {
-        Object.assign(this.selectedSection.menuItems[index], updated)
+    const result = await this.validationController.validate()
+    if (result.valid) {
+      if (isNew) {
+        const newItem = await this.menuItemService.create(this.item)
+        this.selectedSection.menuItems.push(newItem)
+      } else {
+        const updated = await this.menuItemService.update(this.item)
+        const index = this.selectedSection.menuItems.findIndex((menuItem) => menuItem?.id === this.item.id)
+        if (index !== -1) {
+          Object.assign(this.selectedSection.menuItems[index], updated)
+        }
       }
+      this.validationController.removeObject(this.item)
+      this.item = new MenuItem()
+      this.validationController.addObject(this.item, this.validationRules)
     }
-    this.item = new MenuItem()
   }
 
   selectItem (item) {

@@ -24,20 +24,20 @@
                     <div class="col-1">${item.price | currency}</div>
                 </div>
             </div>
-            <div class="menu-item-form">
-                <div class="form-group">
+            <div class="menu-item-form row">
+                <div class="form-group col" validation-errors.bind="nameErrors">
                     <label>Name</label>
-                    <input type="text" value.bind="item.name" class="form-control">
+                    <input type="text" value.bind="item.name & validate" class="form-control ${nameErrors.length ? 'is-invalid' : ''}">
                 </div>
-                <div class="form-group">
+                <div class="form-group col">
                     <label>Description</label>
-                    <textarea value.bind="item.description" class="form-control"></textarea>
+                    <textarea value.bind="item.description & validate" class="form-control"></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group col">
                     <label>Price</label>
-                    <input type="number" value.bind="item.price" class="form-control">
+                    <input type="number" value.bind="item.price & validate" class="form-control">
                 </div>
-                <div class="menu-item-button-row mt-1">
+                <div class="menu-item-button-row mt-1 col">
                     <button type="button" class="btn btn-outline-primary" click.delegate="saveMenuItem()">
                         Save <i class="fa-regular fa-floppy-disk"></i>
                     </button>

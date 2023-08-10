@@ -7,9 +7,13 @@
     <ux-dialog-body>
       <div class="row">
         <div class="col-md-12">
-          <div class="form-group">
+          <div class="form-group" validation-errors.bind="restaurantErrors">
             <label>Restaurant name</label>
-            <input focus-on-attach class="form-control" type="text" value.bind="restaurant" placeholder="Restaurant name">
+            <input focus-on-attach class="form-control ${restaurantErrors.length ? 'is-invalid' : ''}"
+              type="text" value.bind="restaurant & validate" placeholder="Restaurant name">
+            <div class="invalid-feedback" repeat.for="errorInfo of restaurantErrors">
+              ${errorInfo.error.message}
+            </div>
           </div>
         </div>
       </div>

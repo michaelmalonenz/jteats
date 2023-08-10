@@ -1,5 +1,6 @@
 import { DialogController } from 'aurelia-dialog'
-import { inject, DOM } from 'aurelia-framework'
+import { inject, DOM, NewInstance } from 'aurelia-framework'
+import { ValidationController, ValidationRules } from 'aurelia-validation'
 import moment from 'moment'
 import { Meal } from '../models/meal'
 import { UserService } from '../services/user'
@@ -9,16 +10,17 @@ import { MenuService } from '../services/menu'
 import { MealService } from '../services/meal'
 import { AuthorizeStep } from '../security/authorise'
 
-@inject(DialogController, UserService, MenuService, MealService, DOM.Element)
+@inject(DialogController, UserService, MenuService, MealService, NewInstance.of(ValidationController), DOM.Element)
 export class MealEditor {
 
   heading = 'Create Meal'
 
-  constructor (dialogController, userService, menuService, mealService, element) {
+  constructor (dialogController, userService, menuService, mealService, validationController, element) {
     this.controller = dialogController
     this.userService = userService
     this.menuService = menuService
     this.mealService = mealService
+    this.validationController = validationController
     this.element = element
     this.id = null
     this.date = moment()
@@ -51,14 +53,17 @@ export class MealEditor {
     }
   }
   
-  save () {
-    this.controller.ok(new Meal({
-      id: this.id,
-      date: this.date.format('YYYY-MM-DD'),
-      description: this.description,
-      ownerId: this.owner.id,
-      menuId: this.menu.id,
-    }))
+  async save () {
+    const result = await this.validationController.validate()
+    if (result.valid) {
+      this.controller.ok(new Meal({
+        id: this.id,
+        date: this.date.format('YYYY-MM-DD'),
+        description: this.description,
+        ownerId: this.owner.id,
+        menuId: this.menu.id,
+      }))
+    }
   }
 
   close () {
@@ -84,3 +89,8 @@ export class MealEditor {
     this.controller.cancel()
   }
 }
+
+ValidationRules
+  .ensure('owner').required()
+  .ensure('menu').required()
+  .on(MealEditor)
