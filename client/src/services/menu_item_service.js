@@ -30,6 +30,15 @@ export class MenuItemService {
     return res.content
   }
 
+  async delete (menuItem) {
+    const res = await this._http
+      .createRequest(`/api/menus/${menuItem.menuId}/sections/${menuItem.menuSectionId}/items/${menuItem.id}`)
+      .asDelete()
+      .send()
+
+    return res.content
+  }
+
   _menuItemReviver (key, value) {
     if (key !== '' && value != null && typeof value === 'object' && !isNaN(key)) {
       return new MenuItem(value)

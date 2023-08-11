@@ -46,3 +46,17 @@ def menu_item_api(menu_id, menu_section_id):
     elif request.method == 'PUT':
         item = repo.update(item)
     return jsonify(item.to_viewmodel())
+
+
+@API_APP.route('/api/menus/<int:menu_id>/sections/<int:section_id>')
+def delete_menu_section(menu_id, section_id):
+    repo = MenuSectionRepository(g.db_session)
+    repo.delete(item_id)
+    return ('', 200)
+
+
+@API_APP.route('/api/menus/<int:menu_id>/sections/<int:section_id>/items/<int:item_id>')
+def delete_menu_item(menu_id, section_id, item_id):
+    repo = MenuItemRepository(g.db_session)
+    repo.delete(item_id)
+    return ('', 200)

@@ -24,3 +24,8 @@ class MenuSectionRepository:
         self.session.commit()
 
         return menu_section
+
+    def delete(self, section_id):
+        statement = update(MenuSection).where(MenuSection.id == section_id).values(deleted=True)
+        self.session.execute(statement)
+        self.session.commit()

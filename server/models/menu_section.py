@@ -1,5 +1,5 @@
 from typing import Optional, List
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ._base import Base
 from .menu_item import MenuItem
@@ -12,9 +12,11 @@ class MenuSection(Base):
     name: Mapped[str] = mapped_column(String(100))
     description: Mapped[Optional[str]] = mapped_column(String(500))
     menu_id: Mapped[int] = mapped_column(ForeignKey("menus.id"))
+    deleted: Mapped[bool] = mapped_column(Boolean, default=False, server_default='false')
     menu: Mapped["Menu"] = relationship(back_populates="menu_sections")
     menu_items: Mapped[List["MenuItem"]] = relationship(
-        back_populates="menu_section", cascade="all, delete-orphan", order_by="MenuItem.id"
+        back_populates="menu_section", cascade="all, delete-orphan", order_by="MenuItem.id",
+        primaryjoin='and_(MenuSection.id == MenuItem.menu_section_id, MenuItem.deleted == False)'
     )
 
     def to_viewmodel(self):

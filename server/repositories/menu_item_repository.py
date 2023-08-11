@@ -22,5 +22,9 @@ class MenuItemRepository:
         )
         menu_item = self.session.scalars(statement).one()
         self.session.commit()
-
         return menu_item
+
+    def delete(self, item_id):
+        statement = update(MenuItem).where(MenuItem.id == item_id).values(deleted=True)
+        self.session.execute(statement)
+        self.session.commit()
