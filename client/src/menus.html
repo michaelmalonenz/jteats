@@ -41,6 +41,9 @@
                     <button type="button" class="btn btn-outline-primary" click.delegate="saveMenuItem()">
                         Save <i class="fa-regular fa-floppy-disk"></i>
                     </button>
+                    <div class="delete-icon-container">
+                        <icon class="delete-icon" icon="fa-trash-can" click.delegate="deleteMenuItem()" if.bind="item.id"></icon>
+                    </div>
                 </div>
             </div>
         </div>

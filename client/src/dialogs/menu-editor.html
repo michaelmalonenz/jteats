@@ -29,7 +29,10 @@
 
     <ux-dialog-footer>
       <div class="row dialog-button-row">
-        <div class="col-8 offset-4">
+        <div class="col-2 delete-icon-container">
+          <icon class="delete-icon" icon="fa-trash-can" click.delegate="deleteMenu()" if.bind="id"></icon>
+        </div>
+        <div class="col-8 offset-2">
           <button type="button" class="btn btn-outline-secondary" click.trigger="close()">Cancel</button>
           <button type="button" class="btn btn-primary" click.trigger="save()">Save</button>
         </div>

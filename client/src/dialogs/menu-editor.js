@@ -2,13 +2,15 @@ import { inject, DOM, NewInstance } from 'aurelia-framework'
 import { DialogController } from 'aurelia-dialog'
 import { Menu } from '../models/menu'
 import { ValidationController, ValidationRules } from 'aurelia-validation'
+import { MenuService } from '../services/menu'
 
-@inject(DialogController, NewInstance.of(ValidationController), DOM.Element)
+@inject(DialogController, NewInstance.of(ValidationController), MenuService, DOM.Element)
 export class MenuEditor {
 
-  constructor(dialogController, validationController, element) {
+  constructor (dialogController, validationController, menuService, element) {
     this.controller = dialogController
     this.validationController = validationController
+    this.menuService = menuService
     this.element = element
     this.id = null
     this.restaurant = ''
@@ -25,11 +27,11 @@ export class MenuEditor {
     }
   }
 
-  close() {
+  close () {
     this.controller.cancel()
   }
 
-  async save() {
+  async save () {
     const result = await this.validationController.validate()
     if (result.valid) {
       this.controller.ok(new Menu({
@@ -38,6 +40,11 @@ export class MenuEditor {
         description: this.description,
       }))
     }
+  }
+
+  async deleteMenu () {
+    await this.menuService.delete(this.id)
+    this.controller.cancel()
   }
 
   keydown (event) {

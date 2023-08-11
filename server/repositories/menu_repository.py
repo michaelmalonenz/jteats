@@ -8,7 +8,7 @@ class MenuRepository:
         self.session = session
 
     def get_all(self):
-        statement = select(Menu)
+        statement = select(Menu).where(Menu.deleted == False)
         return self.session.scalars(statement).all()
 
     def get_by_id(self, menu_id):
@@ -32,3 +32,12 @@ class MenuRepository:
         self.session.commit()
 
         return menu
+
+    def delete(self, menu_id):
+        statement = (
+            update(Menu)
+            .where(Menu.id == menu_id)
+            .values(deleted=True)
+        )
+        self.session.execute(statement)
+        self.session.commit()

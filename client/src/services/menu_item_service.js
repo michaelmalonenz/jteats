@@ -30,9 +30,9 @@ export class MenuItemService {
     return res.content
   }
 
-  async delete (menuItem) {
+  async delete (menuId, menuSectionId, menuItemId) {
     const res = await this._http
-      .createRequest(`/api/menus/${menuItem.menuId}/sections/${menuItem.menuSectionId}/items/${menuItem.id}`)
+      .createRequest(`/api/menus/${menuId}/sections/${menuSectionId}/items/${menuItemId}`)
       .asDelete()
       .send()
 

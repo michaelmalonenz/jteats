@@ -32,13 +32,11 @@ export class MenuSectionService {
     return res.content
   }
 
-  async delete (menuSection) {
-    const res = await this._http
-      .createRequest(`/api/menus/${menuSection.menuId}/sections/${menuSection.id}`)
+  async delete (menuId, menuSectionId) {
+    await this._http
+      .createRequest(`/api/menus/${menuId}/sections/${menuSectionId}`)
       .asDelete()
       .send()
-
-    return res.content
   }
 
   _menuSectionReviver (key, value) {

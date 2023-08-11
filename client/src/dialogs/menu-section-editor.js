@@ -1,14 +1,15 @@
 import { inject, DOM, NewInstance } from 'aurelia-framework'
 import { DialogController } from 'aurelia-dialog'
 import { ValidationController, ValidationRules } from 'aurelia-validation'
+import { MenuSectionService } from '../services/menu_section_service'
 
-
-@inject(DialogController, NewInstance.of(ValidationController), DOM.Element)
+@inject(DialogController, NewInstance.of(ValidationController), MenuSectionService, DOM.Element)
 export class MenuSectionEditor {
 
-    constructor (dialogController, ValidationController, element) {
+    constructor (dialogController, ValidationController, menuSectionService, element) {
         this.controller = dialogController
         this.ValidationController = ValidationController
+        this.menuSectionService = menuSectionService
         this.element = element
         this.name = ''
         this.description = ''
@@ -42,22 +43,27 @@ export class MenuSectionEditor {
     }
 
     close () {
-        this.controller.cancel()
+      this.controller.cancel()
+    }
+
+    async deleteMenuSection () {
+      await this.menuSectionService.delete(this.menuId, this.menuSectionId)
+      this.controller.cancel()
     }
 
     keydown (event) {
-        if (event.key === 'Enter') {
-          this.save()
-        }
+      if (event.key === 'Enter') {
+        this.save()
       }
+    }
 
-      attached () {
-        this.element.addEventListener('keydown', this.boundKeyDown)
-      }
+    attached () {
+      this.element.addEventListener('keydown', this.boundKeyDown)
+    }
 
-      detached () {
-        this.element.removeEventListener('keydown', this.boundKeyDown)
-      }
+    detached () {
+      this.element.removeEventListener('keydown', this.boundKeyDown)
+    }
 }
 
 ValidationRules

@@ -19,24 +19,20 @@ export class Menus {
     this.validationController = validationController
     this.menus = []
     this.selectedMenu = null
-    this.selectedSection = null
-
-    this.item = new MenuItem()
+    this.selectedSection = {}
+    this.item = null
 
     this.validationRules = ValidationRules
       .ensure('name').required()
       .rules
 
-    this.validationController.addObject(this.item, this.validationRules)
+    this.resetItem()
   }
 
   async activate () {
     this.menus = await this.menuService.getAll()
     if (this.menus?.length) {
-      this.selectedMenu = this.menus[0]
-      if (this.selectedMenu.menuSections?.length) {
-        this.selectedSection = this.selectedMenu.menuSections[0]
-      }
+      this.selectMenu(this.menus[0])
     }
   }
 
@@ -68,6 +64,11 @@ export class Menus {
 
   selectMenu (menu) {
     this.selectedMenu = menu
+    if (this.selectedMenu.menuSections?.length) {
+      this.selectedSection = this.selectedMenu.menuSections[0]
+    } else {
+      this.selectedSection = {}
+    }
   }
 
   addSection () {
@@ -104,7 +105,7 @@ export class Menus {
 
   selectSection (section) {
     this.selectedSection = section
-    this.item = new MenuItem()
+    this.resetItem()
   }
 
   async saveMenuItem () {
@@ -123,14 +124,29 @@ export class Menus {
           Object.assign(this.selectedSection.menuItems[index], updated)
         }
       }
-      this.validationController.removeObject(this.item)
-      this.item = new MenuItem()
-      this.validationController.addObject(this.item, this.validationRules)
+      this.resetItem()
     }
+  }
+
+  resetItem () {
+    if (this.item) {
+      this.validationController.removeObject(this.item)
+    }
+    this.item = new MenuItem()
+    this.validationController.addObject(this.item, this.validationRules)
   }
 
   selectItem (item) {
     this.item = new MenuItem(item)
+  }
+
+  async deleteMenuItem () {
+    await this.menuItemService.delete(this.selectedMenu.id, this.selectedSection.id, this.item.id)
+    const index = this.selectedSection.menuItems.findIndex((menuItem) => menuItem?.id === this.item.id)
+    if (index !== -1) {
+      this.selectedSection.menuItems.splice(index, 1)
+    }
+    this.resetItem()
   }
 
 }

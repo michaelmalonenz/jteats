@@ -53,6 +53,13 @@ export class MenuService {
     return res.content
   }
 
+  async delete (menuId) {
+    await this._http
+      .createRequest(`/api/menus/${menuId}`)
+      .asDelete()
+      .send()
+  }
+
   _menuReviver (key, value) {
     if (key !== '' && value != null && typeof value === 'object' && !isNaN(key)) {
       if (key === 'menuItems') return value
