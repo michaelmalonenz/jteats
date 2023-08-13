@@ -8,9 +8,9 @@ export class WebSocket {
 
     constructor (eventAggregator) {
         this.eventAggregator = eventAggregator
-        this.socket = io()
-        this.socket.on('meal_closed', this.mealClosed.bind(this))
-        this.socket.on('item_ordered', this.itemOrdered.bind(this))
+        // this.socket = io()
+        // this.socket.on('meal_closed', this.mealClosed.bind(this))
+        // this.socket.on('item_ordered', this.itemOrdered.bind(this))
     }
 
     mealClosed (arg) {
