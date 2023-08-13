@@ -1,5 +1,6 @@
 import environment from '../config/environment.json';
 import {PLATFORM} from 'aurelia-pal';
+import { WebSocket } from 'services/socketio';
 
 export function configure(aurelia) {
   aurelia.use

@@ -29,6 +29,16 @@ export class UserService {
     return res.content
   }
 
+  async getUsersWithOrdersForMeal (mealId) {
+    const res = await this._http
+      .createRequest(`/api/users/meals/${mealId}`)
+      .asGet()
+      .withReviver(this._userReviver)
+      .send()
+
+    return res.content
+  }
+
   _userReviver (key, value) {
     if (key === '' && value != null && typeof value === 'object' && isNaN(key)) {
       return new User(value)

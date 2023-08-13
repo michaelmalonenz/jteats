@@ -36,3 +36,6 @@ class UserRepository():
         self.session.commit()
         self.session.refresh(user)
         return user
+
+    def get_users_for_meal(self, meal_id):
+        return []

@@ -17,3 +17,10 @@ def get_all_users():
     repo = UserRepository(g.db_session)
     users = repo.get_all()
     return jsonify([user.to_viewmodel() for user in users])
+
+
+@API_APP.route('/users/meals/<int:meal_id>')
+def get_users_for_meal(meal_id):
+    repo = UserRepository(g.db_session)
+    users = repo.get_users_for_meal(meal_id)
+    return jsonify([user.to_viewmodel() for user in users])

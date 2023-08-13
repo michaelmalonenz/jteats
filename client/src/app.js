@@ -6,12 +6,14 @@ import '@fortawesome/fontawesome-free/js/brands'
 import { inject, PLATFORM } from 'aurelia-framework'
 import { AuthorizeStep } from './security/authorise'
 import { UserService } from './services/user'
+import { WebSocket } from './services/socketio'
 
-@inject(UserService)
+@inject(UserService, WebSocket)
 export class App {
 
-  constructor (userService) {
+  constructor (userService, webSocket) {
     this.userService = userService
+    this.webSocket = webSocket
   }
 
   async activate () {

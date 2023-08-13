@@ -13,6 +13,7 @@ from flask import (
 )
 from flask_session import Session
 from flask_dotenv import DotEnv
+from flask_socketio import SocketIO
 import sqlalchemy
 from dbconfig import get_db_url
 
@@ -28,6 +29,7 @@ env = DotEnv()
 env.init_app(app)
 app.register_blueprint(API_APP, url_prefix='/api')
 oauth = OAuth(app)
+socketio = SocketIO(app)
 
 app.config['SESSION_TYPE'] = 'filesystem'
 server_session = Session(app)
@@ -96,6 +98,7 @@ def before_request():
         return redirect('/login')
     db = sqlalchemy.create_engine(get_db_url())
     g.db_session = sqlalchemy.orm.Session(db)
+    g.socketio = socketio
     if 'profile' in session:
         g.current_user_id = session['profile']['user_id']
 
@@ -124,4 +127,4 @@ def send_static(path):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    app.run(host="0.0.0.0", debug=True)
+    socketio.run(app, debug=True)

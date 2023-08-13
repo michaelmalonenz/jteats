@@ -46,4 +46,5 @@ def meal_order_items(meal_id):
 def meal_close_orders(meal_id):
     repo = MealRepository(g.db_session)
     meal = repo.close_orders(meal_id)
+    g.socketio.emit('meal_closed', {'mealId': meal.id}, broadcast=True)
     return jsonify(meal.to_viewmodel())

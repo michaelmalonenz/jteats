@@ -11,6 +11,7 @@ def order_items_api():
         if request.method == 'POST':
             order_item = OrderItem.from_viewmodel(**request.json)
             order_item = repo.add_order_item(order_item)
+            g.socketio.emit('item_ordered', {'mealId': order_item.meal_id}, broadcast=True)
             return jsonify(order_item.to_viewmodel())
         elif request.method == 'GET':
             order_items = repo.get_all()

@@ -1,6 +1,8 @@
 flask
 flask-dotenv
 flask-session
+flask-socketio
+python-socketio==5.7.2
 psycopg2
 authlib
 requests
@@ -8,3 +10,4 @@ pgmigrate
 sqlalchemy
 alembic
 gunicorn
+eventlet

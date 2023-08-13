@@ -5,22 +5,25 @@ import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
 import { MenuService } from './services/menu'
 import { OrderItemService } from './services/order_item_service'
+import { UserService } from './services/user'
 import { AuthorizeStep } from './security/authorise'
-import { ORDER_ADDED } from './utils/events'
+import { ORDER_ADDED, ITEM_ORDERED, MEAL_CLOSED } from './utils/events'
 
-@inject(DialogService, EventAggregator, MealService, OrderItemService, MenuService)
+@inject(DialogService, EventAggregator, MealService, OrderItemService, MenuService, UserService)
 export class Meals {
  
-  constructor (dialogService, eventAggregator, mealService, orderItemService, menuService) {
+  constructor (dialogService, eventAggregator, mealService, orderItemService, menuService, userService) {
     this.dialogService = dialogService
     this.eventAggregator = eventAggregator
     this.mealService = mealService
     this.orderItemService = orderItemService
     this.menuService = menuService
+    this.userService = userService
     this.meals = []
     this.selectedMeal = null
     this.myOrderItems = []
     this.allOrderItems = []
+    this.usersWithOrders = []
   }
 
   async activate () {
@@ -32,9 +35,13 @@ export class Meals {
 
   bind () {
     this.orderItemAddedSub = this.eventAggregator.subscribe(ORDER_ADDED, this.orderAdded.bind(this))
+    this.itemOrderedSub = this.eventAggregator.subscribe(ITEM_ORDERED, this.itemOrdered.bind(this))
+    this.mealClosedSub = this.eventAggregator.subscribe(MEAL_CLOSED, this.mealClosed.bind(this))
   }
 
   unbind () {
+    this.mealClosedSub.dispose()
+    this.itemOrderedSub.dispose()
     this.orderItemAddedSub.dispose()
   }
 
@@ -122,5 +129,18 @@ export class Meals {
       }
     }
     return results
+  }
+
+  async itemOrdered (itemArg) {
+    if (this.selectedMeal.id === itemArg.mealId) {
+      this.usersWithOrders = await this.userService.getUsersWithOrdersForMeal(itemArg.mealId)
+    }
+  }
+
+  mealClosed (mealArg) {
+    if (this.selectedMeal.id === mealArg.mealId) {
+      this.selectedMeal.closed = true
+      this.selectMeal(this.selectedMeal)
+    }
   }
 }
