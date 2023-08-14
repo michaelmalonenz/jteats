@@ -92,6 +92,7 @@ export class Meals {
        this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
     } else {
       this.myOrderItems = await this.orderItemService.getAllForCurrentUserMeal(meal)
+      this.usersWithOrders = await this.userService.getUsersWithOrdersForMeal(meal.id)
     }
   }
 

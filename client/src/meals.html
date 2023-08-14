@@ -19,6 +19,13 @@
           </button>
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          <div repeat.for="user of usersWithOrders">
+            <user-display user.bind="user" avatar-only="true"></user-display>
+          </div>
+        </div>
+      </div>
       <div class="meal-menu-sections">
         <meal-menu-section repeat.for="section of menu.menuSections" section.bind="section" meal.bind="selectedMeal">
         </meal-menu-section>
