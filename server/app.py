@@ -87,7 +87,7 @@ def callback_handling():
 @app.route('/login')
 @allow_anonymous
 def login():
-    return auth0.authorize_redirect(redirect_uri=oauth_conf['callbackURL'])
+    return auth0.authorize_redirect(redirect_uri=f'{request.scheme}://{request.host}/auth/callback')
 
 
 @app.before_request

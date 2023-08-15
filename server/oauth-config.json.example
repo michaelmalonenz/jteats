@@ -1,6 +1,5 @@
 {
     "clientID": "",
     "clientSecret": "",
-    "domain": "",
-    "callbackURL": ""
+    "domain": ""
 }
