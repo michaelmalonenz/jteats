@@ -1,6 +1,6 @@
 {
     "username": "",
     "password": "",
-    "dbname": "jteats",
+    "database": "jteats",
     "host": "localhost"
 }

@@ -29,7 +29,7 @@ env = DotEnv()
 env.init_app(app)
 app.register_blueprint(API_APP, url_prefix='/api')
 oauth = OAuth(app)
-socketio = SocketIO(app, cors_allowed_origins="https://jteats.xyz")
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 app.config['SESSION_TYPE'] = 'filesystem'
 server_session = Session(app)
