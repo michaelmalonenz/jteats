@@ -10,11 +10,13 @@ from flask import (
     redirect,
     request,
     send_from_directory,
+    url_for,
 )
 from flask_session import Session
 from flask_dotenv import DotEnv
 from flask_socketio import SocketIO
 import sqlalchemy
+from urllib.parse import quote_plus, urlencode
 from dbconfig import get_db_url
 
 from authlib.integrations.flask_client import OAuth
@@ -117,7 +119,16 @@ def index():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect('/login')
+    return redirect(
+        f'https://{AUTH0_DOMAIN}/v2/logout?' +
+        urlencode(
+            {
+                "returnTo": f'{request.scheme}://{request.host}/login',
+                "client_id": oauth_conf['clientID'],
+            },
+            quote_via=quote_plus,
+        )
+    )
 
 
 @app.route('/<path:path>', methods=['GET'])
