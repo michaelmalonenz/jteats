@@ -27,3 +27,8 @@ To run the app in development mode, run the following two commands:
 - in client: `au build --watch`
 - in server: `python app.py`
 after which, the app should be accessible at http://localhost:5000
+
+
+## Questions
+
+Theoretically there's no reason that this won't run on Windows, but I don't know how Git will handle checking out folder symlinks.  NTFS does support them, so I guess it might work?  Python, postgres and node certainly all run on Windows, so maybe?
