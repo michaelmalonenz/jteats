@@ -19,11 +19,12 @@
           </button>
         </div>
       </div>
-      <div class="row">
+      <div class="row align-items-center">
+        <div class="col-md-1 col-sm-3">
+          Users ordered:
+        </div>
         <div class="col">
-          <div repeat.for="user of usersWithOrders">
-            <user-display user.bind="user" avatar-only="true"></user-display>
-          </div>
+          <user-display class="meal-users-ordered" repeat.for="user of usersWithOrders" user.bind="user" avatar-only="true"></user-display>
         </div>
       </div>
       <div class="meal-menu-sections">
