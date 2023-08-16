@@ -7,6 +7,7 @@ import { MenuService } from './services/menu'
 import { OrderItemService } from './services/order_item_service'
 import { UserService } from './services/user'
 import { AuthorizeStep } from './security/authorise'
+import { OrderItem } from './models/order_item'
 import { ORDER_ADDED, ITEM_ORDERED, MEAL_CLOSED } from './utils/events'
 
 @inject(DialogService, EventAggregator, MealService, OrderItemService, MenuService, UserService)
@@ -124,7 +125,7 @@ export class Meals {
     for (const item of orderItems) {
       const result = results.find(x => x.menuItem.id == item.menuItem.id)
       if (result == null) {
-        results.push(item)
+        results.push(new OrderItem(item))
       } else {
         result.quantity += item.quantity
       }

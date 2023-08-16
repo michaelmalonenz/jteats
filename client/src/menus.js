@@ -128,16 +128,16 @@ export class Menus {
     }
   }
 
-  resetItem () {
+  resetItem (item=null) {
     if (this.item) {
       this.validationController.removeObject(this.item)
     }
-    this.item = new MenuItem()
+    this.item = new MenuItem(item)
     this.validationController.addObject(this.item, this.validationRules)
   }
 
   selectItem (item) {
-    this.item = new MenuItem(item)
+    this.resetItem(item)
   }
 
   async deleteMenuItem () {

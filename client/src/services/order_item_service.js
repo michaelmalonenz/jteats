@@ -55,7 +55,7 @@ export class OrderItemService {
   }
 
   _orderItemReviver (key, value) {
-    if (key !== '' && value != null && typeof value === 'object' && !isNaN(key)) {
+    if (key !== '' && value != null && typeof value === 'object' && isNaN(key)) {
       return new OrderItem(value)
     }
     return value
