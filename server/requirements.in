@@ -2,6 +2,7 @@ flask
 flask-dotenv
 flask-session
 flask-socketio
+flask-sqlalchemy
 python-socketio==5.7.2
 psycopg2
 authlib

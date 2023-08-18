@@ -33,7 +33,8 @@ app.register_blueprint(API_APP, url_prefix='/api')
 oauth = OAuth(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_TYPE'] = 'sqlalchemy'
+app.config['SQLALCHEMY_DATABASE_URI'] = get_db_url()
 server_session = Session(app)
 
 with open('./oauth-config.json') as inf:
