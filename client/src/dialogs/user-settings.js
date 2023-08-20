@@ -18,7 +18,7 @@ export class UserSettings {
     }
 
     save () {
-        this.controller.ok()
+        this.controller.ok(this.settings)
     }
     
 }

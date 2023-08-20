@@ -66,7 +66,7 @@ class UserRepository():
             select(UserSettings)
             .where(UserSettings.id == to_update.id)
         )
-        settings = self.settings.scalars(statement).one()
+        settings = self.session.scalars(statement).one()
         settings.account_num = to_update.account_num
         self.session.commit()
         return settings
