@@ -19,8 +19,6 @@
 
 .user-panel-dropdown {
     position: absolute;
-    // bottom: 0;
-    // transform: translateY(100%);
     background-color: var(--bs-body-bg);
     width: 10em;
     box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);
@@ -29,11 +27,17 @@
     border: 1px solid var(--bs-gray-dark);
     z-index: 1;
 
-    &:hover {
+    & > a {
+        padding: 0.2em;
+        border: 1px solid transparent;
+        border-radius: 5px;
+    }
+
+    & > a:hover {
         border: 1px solid $primary;
     }
 
-    &:active {
+    & > a:active {
         background-color: $primary;
         color: var(--bs-body-bg);
     }

@@ -24,3 +24,10 @@ def get_users_for_meal(meal_id):
     repo = UserRepository(g.db_session)
     users = repo.get_users_for_meal(meal_id)
     return jsonify([user.to_viewmodel() for user in users])
+
+
+@API_APP.route('/user/settings', methods=['GET'])
+def get_user_settings():
+    repo = UserRepository(g.db_session)
+    settings = repo.get_user_settings(g.current_user_id)
+    return jsonify(settings.to_viewmodel())

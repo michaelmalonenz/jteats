@@ -5,5 +5,6 @@ export function configure(config) {
     PLATFORM.moduleName('./meal-editor'),
     PLATFORM.moduleName('./menu-editor'),
     PLATFORM.moduleName('./menu-section-editor'),
+    PLATFORM.moduleName('./user-settings'),
   ]);
 }

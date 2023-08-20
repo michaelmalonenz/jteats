@@ -1,13 +1,24 @@
-import { customElement, computedFrom } from 'aurelia-framework'
+import { customElement, computedFrom, inject } from 'aurelia-framework'
+import { DialogService } from 'aurelia-dialog'
 import { AuthorizeStep } from '../security/authorise'
+import { UserSettings } from '../dialogs/user-settings'
+import { UserService } from '../services/user'
 
+@inject(DialogService, UserService)
 @customElement('user-panel')
 export class UserPanel {
 
   showDropdown = false
 
-  constructor () {
+  constructor (dialogService, userService) {
+    this.dialogService = dialogService
+    this.userService = userService
     this.boundToggleDropdown = this.toggleDropdown.bind(this)
+    this.settings = null
+  }
+
+  async activate () {
+    this.settings = await this.userService.getUserSettings()
   }
 
   @computedFrom('currentUser')
@@ -26,5 +37,17 @@ export class UserPanel {
     } else {
       document.removeEventListener('click', this.boundToggleDropdown)
     }
+  }
+
+  async openSettings () {
+    this.dialogService.open({
+      viewModel: UserSettings,
+      model: this.settings,
+      lock: true,
+    }).whenClosed(async (response) => {
+      if (!response.wasCancelled) {
+        await this.userService.saveUserSettings(response.output)
+      }
+    })
   }
 }

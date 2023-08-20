@@ -1,5 +1,5 @@
-from sqlalchemy import select, distinct
-from models import User, OrderItem
+from sqlalchemy import select
+from models import User, OrderItem, UserSettings
 
 
 class UserRepository():
@@ -45,3 +45,10 @@ class UserRepository():
             .where(OrderItem.meal_id == meal_id)
         )
         return self.session.scalars(statement).all()
+
+    def get_user_settings(self, user_id):
+        statement = (
+            select(UserSettings)
+            .where(UserSettings.user_id == user_id)
+        )
+        return self.session.scalars(statement).one_or_none()
