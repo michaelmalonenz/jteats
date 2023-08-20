@@ -14,11 +14,15 @@ class UserSettings(Base):
     def to_viewmodel(self):
         return {
             'id': self.id,
-            'account_num': self.account_num,
-            'user_id': self.user_id,
+            'accountNum': self.account_num,
+            'userId': self.user_id,
             'user': self.user.to_viewmodel(),
         }
 
     @staticmethod
     def from_viewmodel(**kwargs):
-        pass
+        settings = UserSettings()
+        settings.id = kwargs.get('id')
+        settings.user_id = kwargs.get('userId')
+        settings.account_num = kwargs.get('accountNum')
+        return settings

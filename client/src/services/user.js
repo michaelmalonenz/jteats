@@ -51,7 +51,14 @@ export class UserService {
   }
 
   async saveUserSettings (settings) {
-    console.log(settings)
+    const res = await this._http
+      .createRequest('/api/user/settings')
+      .asPut()
+      .withContent(settings)
+      .withReviver(this._settingsReviver)
+      .send()
+
+    return res.content
   }
 
   _userReviver (key, value) {

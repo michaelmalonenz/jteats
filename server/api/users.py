@@ -1,6 +1,7 @@
-from flask import g, jsonify
+from flask import g, jsonify, request
 from .app import API_APP
 from repositories import UserRepository
+from models import UserSettings
 
 
 @API_APP.route('/me')
@@ -26,8 +27,13 @@ def get_users_for_meal(meal_id):
     return jsonify([user.to_viewmodel() for user in users])
 
 
-@API_APP.route('/user/settings', methods=['GET'])
+@API_APP.route('/user/settings', methods=['GET', 'PUT'])
 def get_user_settings():
     repo = UserRepository(g.db_session)
-    settings = repo.get_user_settings(g.current_user_id)
-    return jsonify(settings.to_viewmodel())
+    if request.method == 'GET':
+        settings = repo.get_user_settings(g.current_user_id)
+        return jsonify(settings.to_viewmodel())
+    elif request.method == 'PUT':
+        settings = UserSettings.from_viewmodel(**request.json)
+        settings = repo.save_user_settings(settings)
+        return jsonify(settings.to_viewmodel())

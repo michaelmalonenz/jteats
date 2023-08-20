@@ -4,7 +4,19 @@
       <div>User Settings</div>
     </ux-dialog-header>
     <ux-dialog-body>
-
+      <img class="user-settings-image-container" src.bind="settings.user.pictureUrl" alt="User Avatar">
+      <div class="form-group">
+        <label>Name</label>
+        <div class="form-control">${settings.user.name}</div>
+      </div>
+      <div class="form-group mt-2">
+        <label>Email</label>
+        <div class="form-control">${settings.user.email}</div>
+      </div>
+      <div class="form-group mt-2">
+        <label>Account Number</label>
+        <input focus-on-attach type="text" class="form-control" value.bind="settings.accountNumber">
+      </div>
     </ux-dialog-body>
     <ux-dialog-footer>
       <div class="row dialog-button-row">

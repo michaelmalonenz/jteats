@@ -17,8 +17,9 @@ export class UserPanel {
     this.settings = null
   }
 
-  async activate () {
-    this.settings = await this.userService.getUserSettings()
+  async bind () {
+    this.settings = await this.userService.getCurrentUserSettings()
+    console.log(this.settings)
   }
 
   @computedFrom('currentUser')

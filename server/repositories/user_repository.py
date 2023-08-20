@@ -51,4 +51,22 @@ class UserRepository():
             select(UserSettings)
             .where(UserSettings.user_id == user_id)
         )
-        return self.session.scalars(statement).one_or_none()
+        settings = self.session.scalars(statement).one_or_none()
+        if settings is None:
+            settings = UserSettings()
+            settings.user_id = user_id
+            settings.account_num = ''
+            self.session.add(settings)
+            self.session.commit()
+            self.session.refresh(settings)
+        return settings
+
+    def save_user_settings(self, to_update):
+        statement = (
+            select(UserSettings)
+            .where(UserSettings.id == to_update.id)
+        )
+        settings = self.settings.scalars(statement).one()
+        settings.account_num = to_update.account_num
+        self.session.commit()
+        return settings
