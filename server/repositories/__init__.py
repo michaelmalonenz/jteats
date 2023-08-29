@@ -1,3 +1,4 @@
+from .item_option_repository import ItemOptionRepository
 from .meal_repository import MealRepository
 from .menu_item_repository import MenuItemRepository
 from .menu_repository import MenuRepository

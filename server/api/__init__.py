@@ -4,3 +4,4 @@ from .users import *
 from .meals import *
 from .menus import *
 from .order_items import *
+from .item_options import *

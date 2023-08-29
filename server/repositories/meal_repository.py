@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert, update, func
+from sqlalchemy import select, update, func
 from models import Meal
 
 

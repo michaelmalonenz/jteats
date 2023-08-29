@@ -1,3 +1,4 @@
+from .item_option import ItemOption
 from .meal import Meal
 from .menu_item import MenuItem
 from .menu_section import MenuSection

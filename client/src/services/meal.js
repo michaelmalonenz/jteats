@@ -1,7 +1,6 @@
 import { HttpClient } from 'aurelia-http-client'
 import { inject } from 'aurelia-framework'
 import { Meal } from '../models/meal'
-import { MenuItem } from '../models/menu_item'
 import moment from 'moment'
 
 @inject(HttpClient)
