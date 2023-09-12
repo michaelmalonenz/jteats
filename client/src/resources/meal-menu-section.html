@@ -3,7 +3,7 @@
     <div click.delegate="toggleExpand()" class="meal-menu-section-name">${section.name}</div>
     <div class="row meal-menu-item" repeat.for="item of section.menuItems" if.bind="expanded" dblclick.delegate="addToOrder($event, item)">
       <div class="col-3">${item.name}</div>
-      <div class="col-6">${item.description}</div>
+      <div class="col-6 menu-item-description">${item.description}</div>
       <div class="col-2">${item.price | currency}</div>
       <div class="col-1">
         <icon class="add-order-item-icon" title="Add one to order" icon="fa-circle-up" click.delegate="addToOrder($event, item)"></icon>

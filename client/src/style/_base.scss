@@ -41,3 +41,9 @@
 body {
     height: 90vh;
 }
+
+@media (max-width: 575.98px) {
+    .xs-hidden {
+        display: none;
+    }
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="meal-page">
-    <div class="meal-sidebar">
+    <div class="meal-sidebar xs-hidden">
       <button type="button" class="btn btn-primary" click.delegate="createMeal()">Create <i
           class="fa fa-plus"></i></button>
       <div repeat.for="meal of meals">
@@ -58,20 +58,20 @@
         <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${menu.restaurant}</div>
       </div>
       <div class="row" repeat.for="item of aggregatedOrderItems">
-        <div class="col-md-4 col-sm-6">${item.menuItem.name}</div>
-        <div class="col-md-1 col-sm-2 text-center">${item.quantity}</div>
-        <div class="col-md-1 col-sm-2 text-center">${(item.menuItem.price * item.quantity) | currency}</div>
+        <div class="col-6">${item.menuItem.name} <span class="xs-hidden menu-item-description">${item.menuItem.description}</span></div>
+        <div class="col-1 text-center">${item.quantity}</div>
+        <div class="col-1 text-center">${(item.menuItem.price * item.quantity) | currency}</div>
       </div>
       <div class="row">
-        <div class="total text-center col-md-1 col-sm-2 offset-md-4 offset-sm-6">Total: </div>
-        <div class="total text-center col-md-1 col-sm-2">${totalCost | currency}</div>
+        <div class="total text-center col-2 col-md-1 offset-5 offset-md-6">Total: </div>
+        <div class="total text-center col-2 col-md-1">${totalCost | currency}</div>
       </div>
 
       <div class="mt-5">
         <div class="row" repeat.for="item of allOrderItems">
-          <div class="col-4">${item.menuItem.name}</div>
-          <div class="col-4">${item.user.name}</div>
-          <div class="col-2">${item.quantity}</div>
+          <div class="col-5 col-md-4">${item.menuItem.name}</div>
+          <div class="col-5 col-md-3">${item.user.name}</div>
+          <div class="col-2 col-md-1 text-center">${item.quantity}</div>
         </div>
       </div>
     </div>
