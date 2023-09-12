@@ -1,7 +1,7 @@
 <template>
   <div class="meal-menu-section">
     <div click.delegate="toggleExpand()" class="meal-menu-section-name">${section.name}</div>
-    <div class="row meal-menu-item" repeat.for="item of section.menuItems" if.bind="expanded">
+    <div class="row meal-menu-item" repeat.for="item of section.menuItems" if.bind="expanded" dblclick.delegate="addToOrder($event, item)">
       <div class="col-3">${item.name}</div>
       <div class="col-6">${item.description}</div>
       <div class="col-2">${item.price | currency}</div>

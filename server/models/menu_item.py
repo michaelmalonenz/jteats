@@ -15,8 +15,7 @@ class MenuItem(Base):
     menu_section_id: Mapped[int] = mapped_column(ForeignKey("menu_sections.id"))
     menu_section: Mapped["MenuSection"] = relationship(back_populates="menu_items")
     item_options: Mapped[List["ItemOption"]] = relationship(
-        back_populates="menu_item", cascade="all, delete-orphan", order_by="MenuItem.id",
-        primaryjoin='MenuItem.deleted == False'
+        back_populates="menu_item", cascade="all, delete-orphan", order_by="ItemOption.id"
     )
 
     def to_viewmodel(self):

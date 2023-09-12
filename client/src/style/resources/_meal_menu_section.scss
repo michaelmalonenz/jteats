@@ -24,6 +24,8 @@
     padding-left: 0.5em;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
 
     &>div {
         padding-right: 0.5em;
