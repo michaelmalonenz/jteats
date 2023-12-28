@@ -1,5 +1,6 @@
 import { DialogService } from 'aurelia-dialog'
 import { inject, computedFrom } from 'aurelia-framework'
+import { Router } from 'aurelia-router'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
@@ -10,12 +11,13 @@ import { AuthorizeStep } from './security/authorise'
 import { OrderItem } from './models/order_item'
 import { ORDER_ADDED, ITEM_ORDERED, MEAL_CLOSED } from './utils/events'
 
-@inject(DialogService, EventAggregator, MealService, OrderItemService, MenuService, UserService)
+@inject(DialogService, EventAggregator, Router, MealService, OrderItemService, MenuService, UserService)
 export class Meals {
  
-  constructor (dialogService, eventAggregator, mealService, orderItemService, menuService, userService) {
+  constructor (dialogService, eventAggregator, router, mealService, orderItemService, menuService, userService) {
     this.dialogService = dialogService
     this.eventAggregator = eventAggregator
+    this.router = router
     this.mealService = mealService
     this.orderItemService = orderItemService
     this.menuService = menuService
@@ -27,8 +29,15 @@ export class Meals {
     this.usersWithOrders = []
   }
 
-  async activate () {
+  async activate (params) {
     this.meals = await this.mealService.getAll()
+    if (params?.meal_id) {
+      const meal = this.meals.find(x => x.id == params.meal_id)
+      if (meal) {
+        await this.selectMeal(meal)
+        return
+      }
+    }
     if (this.meals?.length) {
       await this.selectMeal(this.meals[0])
     }
@@ -67,7 +76,7 @@ export class Meals {
       if (!response.wasCancelled) {
         const meal = await this.mealService.create(response.output)
         this.meals.unshift(meal)
-        this.selectedMeal = meal
+        this.navigateToMeal(meal.id)
       }
     })
   }
@@ -83,6 +92,10 @@ export class Meals {
         Object.assign(meal, updated)
       }
     })
+  }
+
+  navigateToMeal (mealId) {
+    this.router.navigateToRoute('meals', { meal_id: mealId }, { replace: true })
   }
 
   async selectMeal (meal) {
