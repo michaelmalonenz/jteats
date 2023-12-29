@@ -5,3 +5,4 @@ dbconfig.json
 oauth-config.json
 flask_session/
 __pycache__/
+smtpconfig.json

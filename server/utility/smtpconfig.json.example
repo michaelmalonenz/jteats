@@ -1,0 +1,6 @@
+{
+    "host": "email.ap-southeast-2.amazonaws.com",
+    "port": 465,
+    "username": "",
+    "password": ""
+}

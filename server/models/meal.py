@@ -3,7 +3,6 @@ from typing import Optional, List
 from sqlalchemy import String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ._base import Base
-from .order_item import OrderItem
 
 
 class Meal(Base):
@@ -18,6 +17,9 @@ class Meal(Base):
     owner: Mapped["User"] = relationship(viewonly=True)
     deleted: Mapped[bool] = mapped_column(Boolean, default=False)
     ordered: Mapped[bool] = mapped_column(Boolean, default=False)
+    order_items: Mapped[List["OrderItem"]] = relationship(
+        back_populates="meal", cascade="all, delete-orphan", order_by="OrderItem.user_id"
+    )
 
     def to_viewmodel(self):
         return {
