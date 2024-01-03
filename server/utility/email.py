@@ -2,6 +2,8 @@ import json
 from smtplib import SMTP_SSL
 from email.message import EmailMessage
 from email.policy import SMTP
+from flask import render_template
+
 
 SMTP_CONFIG = None
 
@@ -24,4 +26,15 @@ def _send_email(content, to_addr):
 
 
 def send_close_meal_emails(meal):
-    pass
+    user_ids = set([x.user_id for x in meal.order_items])
+    for user_id in user_ids:
+        user_items = [item for item in meal.order_items if item.user_id == user_id]
+        user = user_items[0].user
+        _send_email(
+            render_template(
+                '_close_mail_email',
+                user = user,
+                items = user_items,
+            ),
+            user.email
+        )
