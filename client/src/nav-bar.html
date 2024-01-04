@@ -1,30 +1,27 @@
 <template>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md align-items-end" role="navigation">
-      <a class="navbar-brand" href="/">
-        <span>JTEats</span>
-          <!-- <img src="/static/images/logo_transparent_rectangle_116x42.png" alt="logo"> -->
-      </a>
-  
-      <div class="collapse navbar-collapse navbar-center" id="navbarNav" if.bind="loggedIn">
-        <ul class="navbar-nav">
-          <li repeat.for="row of router.navigation" class="nav-item ${row.isActive ? 'active' : ''}">
-            <a class="nav-link" href.bind="row.href"><i class="fa ${row.settings.icon}"></i> ${row.title}</a>
-          </li>
-        </ul>
+  <nav class="navbar navbar-default navbar-fixed-top navbar-expand-md align-items-end" role="navigation">
+    <a class="navbar-brand" href="/">
+      <img src="/static/images/logo-no-background.png" height="75" width="75" alt="JTEats logo" title="JTEats">
+    </a>
+    <div class="collapse navbar-collapse navbar-center" id="navbarNav" if.bind="loggedIn">
+      <ul class="navbar-nav">
+        <li repeat.for="row of router.navigation" class="nav-item ${row.isActive ? 'active' : ''}">
+          <a class="nav-link" href.bind="row.href"><i class="fa ${row.settings.icon}"></i> ${row.title}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="navbar-nav d-flex flex-row align-items-center">
+      <div class="loader ${isLoading ? 'visible' : 'invisible'}" >
+        <i class="fa fa-circle-notch fa-spin fa-2x"></i>
       </div>
-  
-      <div class="navbar-nav d-flex flex-row align-items-center">
-        <div class="loader ${isLoading ? 'visible' : 'invisible'}" >
-          <i class="fa fa-circle-notch fa-spin fa-2x"></i>
-        </div>
-        <user-panel></user-panel>
-      </div>
-  
-      <button class="navbar-toggler" type="button" data-toggle="collapse"
-          data-target="#navbarNav" aria-controls="navbarTogglerDemo02"
-          aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
-  </template>
-  
+      <user-panel></user-panel>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarNav" aria-controls="navbarTogglerDemo02"
+        aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+</template>
