@@ -109,6 +109,7 @@ def close_db_connection(err):
         g.db_session.close()
 
 
+@app.route('/meals', methods=['GET'])
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')

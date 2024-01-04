@@ -95,7 +95,7 @@ export class Meals {
   }
 
   navigateToMeal (mealId) {
-    this.router.navigateToRoute('meals', { meal_id: mealId }, { replace: true })
+    this.router.navigateToRoute('meals', { meal_id: mealId })
   }
 
   async selectMeal (meal) {
