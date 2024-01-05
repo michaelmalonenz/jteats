@@ -12,3 +12,4 @@ sqlalchemy
 alembic
 gunicorn
 eventlet
+boto3

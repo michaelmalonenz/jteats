@@ -1,1 +1,1 @@
-from .email import send_close_meal_emails
+from .mailer import send_close_meal_emails

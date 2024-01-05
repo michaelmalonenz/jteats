@@ -1,6 +1,6 @@
 from flask import g, jsonify, request
 from .app import API_APP
-from repositories import MealRepository, OrderItemRepository
+from repositories import MealRepository, OrderItemRepository, UserRepository
 from models import Meal
 from utility import send_close_meal_emails
 
@@ -47,6 +47,8 @@ def meal_order_items(meal_id):
 def meal_close_orders(meal_id):
     repo = MealRepository(g.db_session)
     meal = repo.close_orders(meal_id)
-    send_close_meal_emails(meal)
+    user_repo = UserRepository(g.db_session)
+    settings = user_repo.get_user_settings(meal.owner.id)
+    send_close_meal_emails(meal, settings)
     g.socketio.emit('meal_closed', {'mealId': meal.id}, broadcast=True)
     return jsonify(meal.to_viewmodel())

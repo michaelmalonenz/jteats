@@ -3,6 +3,35 @@
         
     </head>
     <body>
+        <p>
+            Kia ora {{user.name}},
+        </p>
+        <p>
+            Please pay <span class="name">{{meal.owner.name}}</span> 
+            <span class="total">${{total}}</span> to 
+            <span class="account-num">{{account_num}}</span> at your earliest convenience.
+        </p>
 
+        <p>
+            <table class="order-table">
+                <thead>
+                    <tr><td>Item</td><td>Quantity</td><td>Price</td></tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{item.menu_item.name}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{"${:.2f}".format(item.menu_item.price)}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </p>
+
+        <p>
+            Ngā mihi,<br>
+            The JTEats payment bot
+        </p>
     </body>
 </html>
