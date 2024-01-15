@@ -134,7 +134,7 @@ class SesMailSender:
 
 
 def send_close_meal_emails(meal, owner_settings):
-    if not owner_settings.account_num:
+    if not owner_settings.account_num or True:
         return
     ses_client = boto3.client("ses")
     sender = SesMailSender(ses_client)
