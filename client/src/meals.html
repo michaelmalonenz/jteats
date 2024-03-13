@@ -56,6 +56,11 @@
     <div class="meal-content" if.bind="selectedMeal.closed">
       <div class="row">
         <div class="col-10 h2">${selectedMeal.date.format('YYYY-MM-DD')} - ${menu.restaurant}</div>
+        <div class="col-2">
+          <button type="button" class="btn btn-outline-primary" click.delegate="reopenOrders()" if.bind="mealOwner">
+            Reopen Ordering <i class="fa-regular fa-clock"></i>
+          </button>
+        </div>
       </div>
       <div class="row" repeat.for="item of aggregatedOrderItems">
         <div class="col-6">${item.menuItem.name} <span class="xs-hidden menu-item-description">${item.menuItem.description}</span></div>

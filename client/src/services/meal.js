@@ -59,6 +59,16 @@ export class MealService {
     return res.content
   }
 
+  async reopenOrders (meal) {
+    const res = await this._http
+      .createRequest(`/api/meals/${meal.id}/reopenorders`)
+      .asPost()
+      .withReviver(this._mealReviver)
+      .send()
+
+    return res.content
+  }
+
   _mealReviver(key, value) {
     if (key !== '' && value != null && typeof value === 'object' && isNaN(key)) {
       return new Meal(value)

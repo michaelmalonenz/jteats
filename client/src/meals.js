@@ -9,7 +9,7 @@ import { OrderItemService } from './services/order_item_service'
 import { UserService } from './services/user'
 import { AuthorizeStep } from './security/authorise'
 import { OrderItem } from './models/order_item'
-import { ORDER_ADDED, ITEM_ORDERED, MEAL_CLOSED } from './utils/events'
+import { ORDER_ADDED, ITEM_ORDERED, MEAL_CLOSED, MEAL_REOPENED } from './utils/events'
 
 @inject(DialogService, EventAggregator, Router, MealService, OrderItemService, MenuService, UserService)
 export class Meals {
@@ -47,9 +47,11 @@ export class Meals {
     this.orderItemAddedSub = this.eventAggregator.subscribe(ORDER_ADDED, this.orderAdded.bind(this))
     this.itemOrderedSub = this.eventAggregator.subscribe(ITEM_ORDERED, this.itemOrdered.bind(this))
     this.mealClosedSub = this.eventAggregator.subscribe(MEAL_CLOSED, this.mealClosed.bind(this))
+    this.mealReopenedSub = this.eventAggregator.subscribe(MEAL_REOPENED, this.mealReopened.bind(this))
   }
 
   unbind () {
+    this.mealReopenedSub.dispose()
     this.mealClosedSub.dispose()
     this.itemOrderedSub.dispose()
     this.orderItemAddedSub.dispose()
@@ -114,6 +116,10 @@ export class Meals {
     this.selectedMeal = await this.mealService.closeOrders(this.selectedMeal)
   }
 
+  async reopenOrders () {
+    this.selectedMeal = await this.mealService.reopenOrders(this.selectedMeal)
+  }
+
   async removeItem (item) {
     const result = await this.orderItemService.removeOrderItem(item)
     if (result == null) {
@@ -155,6 +161,13 @@ export class Meals {
   mealClosed (mealArg) {
     if (this.selectedMeal.id === mealArg.mealId) {
       this.selectedMeal.closed = true
+      this.selectMeal(this.selectedMeal)
+    }
+  }
+
+  mealReopened (mealArg) {
+    if (this.selectedMeal.id === mealArg.mealId) {
+      this.selectedMeal.closed = false
       this.selectMeal(this.selectedMeal)
     }
   }

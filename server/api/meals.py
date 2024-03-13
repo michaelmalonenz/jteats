@@ -52,3 +52,10 @@ def meal_close_orders(meal_id):
     send_close_meal_emails(meal, settings)
     g.socketio.emit('meal_closed', {'mealId': meal.id}, broadcast=True)
     return jsonify(meal.to_viewmodel())
+
+@API_APP.route('/meals/<int:meal_id>/reopenorders', methods=['POST'])
+def meal_reopen_orders(meal_id):
+    repo = MealRepository(g.db_session)
+    meal = repo.reopen_orders(meal_id)
+    g.socketio.emit('meal_reopened', {'mealId': meal.id}, broadcast=True)
+    return jsonify(meal.to_viewmodel())

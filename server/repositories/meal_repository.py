@@ -54,3 +54,14 @@ class MealRepository:
         order = self.session.scalars(statement).one()
         self.session.commit()
         return order
+
+    def reopen_orders(self, meal_id):
+        statement = (
+            update(Meal)
+            .where(Meal.id == meal_id)
+            .values(closed=False)
+            .returning(Meal)
+        )
+        order = self.session.scalars(statement).one()
+        self.session.commit()
+        return order
