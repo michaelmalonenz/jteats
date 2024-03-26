@@ -120,6 +120,10 @@ export class Meals {
     this.selectedMeal = await this.mealService.reopenOrders(this.selectedMeal)
   }
 
+  async completeOrder () {
+    await this.orderItemService.updateAll(this.selectedMeal, this.myOrderItems)
+  }
+
   async removeItem (item) {
     const result = await this.orderItemService.removeOrderItem(item)
     if (result == null) {

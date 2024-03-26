@@ -1,4 +1,4 @@
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update
 from models import OrderItem, Meal
 
 
@@ -68,3 +68,13 @@ class OrderItemRepository:
             .where(OrderItem.meal_id == meal_id)
         )
         return self.session.scalars(statement).all()
+
+    def update_many(self, order_items):
+        for item in order_items:
+            statement = (
+                update(OrderItem)
+                .where(OrderItem.id == item.id)
+                .values(notes=item.notes)
+            )
+            self.session.execute(statement)
+        self.session.commit()

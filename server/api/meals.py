@@ -1,7 +1,7 @@
 from flask import g, jsonify, request
 from .app import API_APP
 from repositories import MealRepository, OrderItemRepository, UserRepository
-from models import Meal
+from models import Meal, OrderItem
 from utility import send_close_meal_emails
 
 
@@ -36,11 +36,15 @@ def meal_user_order_items(meal_id):
     return jsonify([x.to_viewmodel() for x in items])
 
 
-@API_APP.route('/meals/<int:meal_id>/orderitems', methods=['GET'])
+@API_APP.route('/meals/<int:meal_id>/orderitems', methods=['GET', 'PUT'])
 def meal_order_items(meal_id):
     repo = OrderItemRepository(g.db_session)
-    items = repo.get_order_items_for_meal(meal_id)
-    return jsonify([x.to_viewmodel() for x in items])
+    if request.method == 'GET':
+        items = repo.get_order_items_for_meal(meal_id)
+        return jsonify([x.to_viewmodel() for x in items])
+    else:
+        repo.update_many([OrderItem.from_viewmodel(**x) for x in request.json])
+        return ('', 200)
 
 
 @API_APP.route('/meals/<int:meal_id>/closeorders', methods=['POST'])

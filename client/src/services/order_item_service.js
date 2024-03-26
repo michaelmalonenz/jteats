@@ -54,6 +54,14 @@ export class OrderItemService {
     return res.content
   }
 
+  async updateAll (meal, orderItems) {
+    await this._http
+      .createRequest(`/api/meals/${meal.id}/orderitems`)
+      .asPut()
+      .withContent(orderItems)
+      .send()
+  }
+
   _orderItemReviver (key, value) {
     if (key !== '' && value != null && typeof value === 'object' && isNaN(key)) {
       return new OrderItem(value)

@@ -5,6 +5,7 @@ export class OrderItem {
         this.mealId = null
         this.quantity = 0
         this.menuItem = null
+        this.notes = null
         Object.assign(this, item)
     }
 }

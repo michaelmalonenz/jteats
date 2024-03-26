@@ -33,19 +33,25 @@
       </div>
       <div class="my-order-items">
         <div class="row fw-bold">
-          <div class="col-5">Item</div>
+          <div class="col-3">Item</div>
+          <div class="col-2">Notes</div>
           <div class="col-2">Quantity</div>
           <div class="col-2">Price</div>
           <div class="col-2">Subtotal</div>
-          <div class="col-1"></div>
+          <div class="col-1">
+            <button type="button" class="btn btn-outline-primary" title="Complete my order" click.delegate="completeOrder()">
+              Complete <i class="fa-regular fa-circle-check"></i>
+            </button>
+          </div>
         </div>
         <div class="order-item row" repeat.for="item of myOrderItems">
-          <div class="col-5">${item.menuItem.name}</div>
+          <div class="col-3">${item.menuItem.name}</div>
+          <div class="col-2"><textarea value.bind="item.notes"></textarea></div>
           <div class="col-2">${item.quantity}</div>
           <div class="col-2">${item.menuItem.price | currency}</div>
           <div class="col-2">${(item.menuItem.price * item.quantity) | currency}</div>
-          <div class="col-1">
-            <icon class="order-item-remove-icon" icon="fa-circle-down"
+          <div class="col-1 text-center">
+            <icon class="order-item-remove-icon" icon="fa-circle-minus"
                   click.delegate="removeItem(item)" title="Remove one from order">
             </icon>
           </div>
@@ -75,7 +81,8 @@
       <div class="mt-5">
         <div class="row" repeat.for="item of allOrderItems">
           <div class="col-5 col-md-4">${item.menuItem.name}</div>
-          <div class="col-5 col-md-3">${item.user.name}</div>
+          <div class="col-2 col-md-2">${item.notes}</div>
+          <div class="col-3 col-md-3">${item.user.name}</div>
           <div class="col-2 col-md-1 text-center">${item.quantity}</div>
         </div>
       </div>
