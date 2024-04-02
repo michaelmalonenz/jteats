@@ -104,6 +104,7 @@ export class Meals {
     this.selectedMeal = meal
     this.menu = await this.menuService.getMenu(meal.menuId)
     if (meal.closed) {
+      this.orders = await this.orderService.getOrdersForMeal(meal)
        this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
        this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
     } else {

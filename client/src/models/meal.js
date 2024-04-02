@@ -4,7 +4,7 @@ export class Meal {
         this.id = null
         this.date = null
         this.description = null
-        this.orderItems = []
+        this.orders = []
         this.ownerId = null
         this.mealId = null
         Object.assign(this, meal)

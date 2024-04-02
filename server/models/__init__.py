@@ -4,6 +4,7 @@ from .menu_item import MenuItem
 from .menu_section import MenuSection
 from .menu import Menu
 from .order_item import OrderItem
+from .order import Order
 from .user import User
 from .user_settings import UserSettings
 from .session import Session

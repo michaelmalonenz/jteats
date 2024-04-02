@@ -17,8 +17,8 @@ class Meal(Base):
     owner: Mapped["User"] = relationship(viewonly=True)
     deleted: Mapped[bool] = mapped_column(Boolean, default=False)
     ordered: Mapped[bool] = mapped_column(Boolean, default=False)
-    order_items: Mapped[List["OrderItem"]] = relationship(
-        back_populates="meal", cascade="all, delete-orphan", order_by="OrderItem.user_id"
+    orders: Mapped[List["Order"]] = relationship(
+        back_populates="meal", cascade="all, delete-orphan", order_by="Order.user_id"
     )
 
     def to_viewmodel(self):
