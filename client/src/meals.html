@@ -31,32 +31,7 @@
         <meal-menu-section repeat.for="section of menu.menuSections" section.bind="section" meal.bind="selectedMeal">
         </meal-menu-section>
       </div>
-      <div class="my-order-items">
-        <div class="row fw-bold">
-          <div class="col-3">Item</div>
-          <div class="col-2">Notes</div>
-          <div class="col-2">Quantity</div>
-          <div class="col-2">Price</div>
-          <div class="col-2">Subtotal</div>
-          <div class="col-1">
-            <button type="button" class="btn btn-outline-primary" title="Complete my order" click.delegate="completeOrder()">
-              Complete <i class="fa-regular fa-circle-check"></i>
-            </button>
-          </div>
-        </div>
-        <div class="order-item row" repeat.for="item of myOrderItems">
-          <div class="col-3">${item.menuItem.name}</div>
-          <div class="col-2"><textarea value.bind="item.notes"></textarea></div>
-          <div class="col-2">${item.quantity}</div>
-          <div class="col-2">${item.menuItem.price | currency}</div>
-          <div class="col-2">${(item.menuItem.price * item.quantity) | currency}</div>
-          <div class="col-1 text-center">
-            <icon class="order-item-remove-icon" icon="fa-circle-minus"
-                  click.delegate="removeItem(item)" title="Remove one from order">
-            </icon>
-          </div>
-        </div>
-      </div>
+      <meal-order meal.bind="selectedMeal"></meal-order>
     </div>
 
     <div class="meal-content" if.bind="selectedMeal.closed">

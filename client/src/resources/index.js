@@ -11,5 +11,6 @@ export function configure(config) {
     PLATFORM.moduleName('./meal-menu-section'),
     PLATFORM.moduleName('./value-converters/currency-value-converter'),
     PLATFORM.moduleName('./user-display'),
+    PLATFORM.moduleName('./meal-order'),
   ]);
 }

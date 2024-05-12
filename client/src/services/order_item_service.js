@@ -9,9 +9,9 @@ export class OrderItemService {
     this._http = httpClient
   }
 
-  async addOrderItem (orderItem) {
+  async addOrderItem (orderItem, meal) {
     const res = await this._http
-      .createRequest('/api/orderitems')
+      .createRequest(`/api/meals/${meal.id}/orderitems`)
       .asPost()
       .withContent(orderItem)
       .withReviver(this._orderItemReviver)

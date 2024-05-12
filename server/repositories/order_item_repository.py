@@ -1,5 +1,5 @@
 from sqlalchemy import select, delete, update
-from models import OrderItem, Meal
+from models import OrderItem, Meal, Order
 
 
 class MealClosedException(Exception):
@@ -16,7 +16,9 @@ class OrderItemRepository:
         return self.session.scalars(statement).all()
 
     def _get_existing(self, order_item):
-        statement = select(Meal).where(Meal.id == order_item.meal_id)
+        statement = select(Order).where(Order.id == order_item.order_id)
+        order = self.session.scalars(statement).one()
+        statement = select(Meal).where(Meal.id == order.meal_id)
         meal = self.session.scalars(statement).one()
         if meal.closed:
             raise MealClosedException(
@@ -24,8 +26,7 @@ class OrderItemRepository:
             )
         statement = (
             select(OrderItem)
-            .where(OrderItem.meal_id == order_item.meal_id)
-            .where(OrderItem.user_id == order_item.user_id)
+            .where(OrderItem.order_id == order_item.order_id)
             .where(OrderItem.menu_item_id == order_item.menu_item_id)
         )
         return self.session.scalars(statement).one_or_none()

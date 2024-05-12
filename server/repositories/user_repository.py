@@ -1,5 +1,5 @@
 from sqlalchemy import select
-from models import User, OrderItem, UserSettings
+from models import User, Order, UserSettings
 
 
 class UserRepository():
@@ -40,9 +40,8 @@ class UserRepository():
     def get_users_for_meal(self, meal_id):
         statement = (
             select(User)
-            .distinct()
-            .join(OrderItem)
-            .where(OrderItem.meal_id == meal_id)
+            .join(Order)
+            .where(Order.meal_id == meal_id)
         )
         return self.session.scalars(statement).all()
 

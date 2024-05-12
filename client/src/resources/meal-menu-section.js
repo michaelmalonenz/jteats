@@ -29,7 +29,7 @@ export class MealMenuSection {
             menuItemId: item.id,
             quantity: 1,
         })
-        const newOrder = await this.orderItemService.addOrderItem(order)
+        const newOrder = await this.orderItemService.addOrderItem(order, this.meal)
         this.eventAggregator.publish(ORDER_ADDED, newOrder)
     }
 }

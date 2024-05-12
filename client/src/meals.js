@@ -5,21 +5,19 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
 import { MenuService } from './services/menu'
-import { OrderItemService } from './services/order_item_service'
 import { UserService } from './services/user'
 import { AuthorizeStep } from './security/authorise'
 import { OrderItem } from './models/order_item'
-import { ORDER_ADDED, ITEM_ORDERED, MEAL_CLOSED, MEAL_REOPENED } from './utils/events'
+import { ITEM_ORDERED, MEAL_CLOSED, MEAL_REOPENED } from './utils/events'
 
-@inject(DialogService, EventAggregator, Router, MealService, OrderItemService, MenuService, UserService)
+@inject(DialogService, EventAggregator, Router, MealService, MenuService, UserService)
 export class Meals {
  
-  constructor (dialogService, eventAggregator, router, mealService, orderItemService, menuService, userService) {
+  constructor (dialogService, eventAggregator, router, mealService, menuService, userService) {
     this.dialogService = dialogService
     this.eventAggregator = eventAggregator
     this.router = router
     this.mealService = mealService
-    this.orderItemService = orderItemService
     this.menuService = menuService
     this.userService = userService
     this.meals = []
@@ -44,7 +42,6 @@ export class Meals {
   }
 
   bind () {
-    this.orderItemAddedSub = this.eventAggregator.subscribe(ORDER_ADDED, this.orderAdded.bind(this))
     this.itemOrderedSub = this.eventAggregator.subscribe(ITEM_ORDERED, this.itemOrdered.bind(this))
     this.mealClosedSub = this.eventAggregator.subscribe(MEAL_CLOSED, this.mealClosed.bind(this))
     this.mealReopenedSub = this.eventAggregator.subscribe(MEAL_REOPENED, this.mealReopened.bind(this))
@@ -54,7 +51,6 @@ export class Meals {
     this.mealReopenedSub.dispose()
     this.mealClosedSub.dispose()
     this.itemOrderedSub.dispose()
-    this.orderItemAddedSub.dispose()
   }
 
   @computedFrom('selectedMeal')
@@ -105,10 +101,9 @@ export class Meals {
     this.menu = await this.menuService.getMenu(meal.menuId)
     if (meal.closed) {
       this.orders = await this.orderService.getOrdersForMeal(meal)
-       this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
-       this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
+      // this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
+      // this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
     } else {
-      this.myOrderItems = await this.orderItemService.getAllForCurrentUserMeal(meal)
       this.usersWithOrders = await this.userService.getUsersWithOrdersForMeal(meal.id)
     }
   }
@@ -119,29 +114,6 @@ export class Meals {
 
   async reopenOrders () {
     this.selectedMeal = await this.mealService.reopenOrders(this.selectedMeal)
-  }
-
-  async completeOrder () {
-    await this.orderItemService.updateAll(this.selectedMeal, this.myOrderItems)
-  }
-
-  async removeItem (item) {
-    const result = await this.orderItemService.removeOrderItem(item)
-    if (result == null) {
-      const index = this.myOrderItems.indexOf(item)
-      this.myOrderItems.splice(index, 1)
-    } else {
-      Object.assign(item, result)
-    }
-  }
-
-  orderAdded (item) {
-    const index = this.myOrderItems.findIndex(x => x.id == item.id)
-    if (index === -1) {
-      this.myOrderItems.push(item)
-    } else {
-      Object.assign(this.myOrderItems[index], item)
-    }
   }
 
   aggregateOrderItems (orderItems) {

@@ -23,12 +23,14 @@ class OrderItem(Base):
             'menuItemId': self.menu_item_id,
             'notes': self.notes,
             'menuItem': self.menu_item.to_viewmodel(),
+            'orderId': self.order_id
         }
 
     @staticmethod
     def from_viewmodel(**kwargs):
         result = OrderItem()
         result.id = kwargs.get('id')
+        result.order_id = kwargs.get('orderId')
         result.quantity = kwargs.get('quantity')
         result.menu_item_id = kwargs.get('menuItemId')
         result.notes = kwargs.get('notes')
