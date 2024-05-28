@@ -103,8 +103,8 @@ export class Meals {
     this.menu = await this.menuService.getMenu(meal.menuId)
     if (meal.closed) {
       this.orders = await this.orderService.getOrdersForMeal(meal)
-      // this.allOrderItems = await this.orderItemService.getOrderItemsForMeal(meal)
-      // this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
+      this.allOrderItems = this.concatOrderItems(this.orders)
+      this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
     } else {
       this.usersWithOrders = await this.userService.getUsersWithOrdersForMeal(meal.id)
     }
@@ -116,6 +116,14 @@ export class Meals {
 
   async reopenOrders () {
     this.selectedMeal = await this.mealService.reopenOrders(this.selectedMeal)
+  }
+
+  concatOrderItems (orders) {
+    const result = []
+    for (const order of orders) {
+      result.concat(order.orderItems)
+    }
+    return result
   }
 
   aggregateOrderItems (orderItems) {
