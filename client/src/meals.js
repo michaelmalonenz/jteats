@@ -119,9 +119,9 @@ export class Meals {
   }
 
   concatOrderItems (orders) {
-    const result = []
+    let result = []
     for (const order of orders) {
-      result.concat(order.orderItems)
+      result = result.concat(order.orderItems)
     }
     return result
   }
