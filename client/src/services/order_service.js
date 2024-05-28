@@ -7,16 +7,16 @@ import { MenuItem } from '../models/menu_item'
 @inject(HttpClient)
 export class OrderService {
     constructor (httpClient) {
-        this._http = httpClient
+      this._http = httpClient
     }
 
     async getOrderForMeal (meal) {
-        const res = await this._http
-            .createRequest(`/api/meals/${meal.id}/order/user`)
-            .asGet()
-            .withReviver(this._orderReviver)
-            .send()
-        return res.content
+      const res = await this._http
+        .createRequest(`/api/meals/${meal.id}/order/user`)
+        .asGet()
+        .withReviver(this._orderReviver)
+        .send()
+      return res.content
     }
 
     _orderReviver (key, value) {

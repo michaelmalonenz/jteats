@@ -34,6 +34,19 @@ export class OrderItemService {
     return res.content
   }
 
+  async removeItemFromOrder (order, item) {
+    const res = await this._http
+      .createRequest(`/api/orders/${order.id}/items/${item.id}`)
+      .asDelete()
+      .withReviver(this._orderReviver)
+      .send()
+
+    if (res.content === '') {
+      return null
+    }
+    return res.content
+  }
+
   async getAllForCurrentUserMeal (meal) {
     const res = await this._http
       .createRequest(`/api/meals/${meal.id}/orderitems/user`)

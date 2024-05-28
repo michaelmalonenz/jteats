@@ -1,5 +1,5 @@
-from models import Order, Meal
-from sqlalchemy import select
+from models import Order, OrderItem
+from sqlalchemy import select, delete
 
 
 class OrderRepository:
@@ -29,3 +29,20 @@ class OrderRepository:
 
     def get_user_order_for_meal(self, meal_id, user_id):
         return self._get_existing(meal_id, user_id)
+
+    def remove_order_item(self, order_id, item_id):
+        statement = (
+            select(OrderItem)
+            .where(OrderItem.order_id == order_id)
+            .where(OrderItem.id == item_id)
+        )
+        existing = self.session.scalars(statement).one_or_none()
+        if existing is None:
+            return None
+        existing.quantity -= 1
+        if existing.quantity == 0:
+            statement = delete(OrderItem).where(OrderItem.id == existing.id)
+            self.session.execute(statement)
+            existing = None
+        self.session.commit()
+        return existing

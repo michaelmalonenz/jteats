@@ -1,16 +1,18 @@
 import { customElement, bindable, inject, computedFrom } from 'aurelia-framework'
 import { EventAggregator } from 'aurelia-event-aggregator'
 import { OrderService } from '../services/order_service'
+import { OrderItemService } from '../services/order_item_service'
 import { ORDER_ADDED } from '../utils/events'
 
-@inject(OrderService, EventAggregator)
+@inject(OrderService, OrderItemService, EventAggregator)
 @customElement('meal-order')
 export class MealOrder {
 
   @bindable meal = null
 
-  constructor (orderService, eventAggregator) {
+  constructor (orderService, orderItemService, eventAggregator) {
     this.orderService = orderService
+    this.orderItemService = orderItemService
     this.eventAggregator = eventAggregator
     this.order = null
   }
@@ -28,22 +30,16 @@ export class MealOrder {
     this.order = await this.orderService.getOrderForMeal(this.meal)
   }
 
-  @computedFrom('order')
-  get myOrderItems() {
-    if (this.order == null)
-      return []
-    return this.order.orderItems
-  }
-
   async completeOrder () {
     await this.orderService.update(this.meal, this.order)
   }
 
   async removeItem (item) {
-    const result = await this.orderService.removeItemFromOrder(this.order, item)
+    const result = await this.orderItemService.removeItemFromOrder(this.order, item)
+    console.log(result)
     if (result == null) {
-      const index = this.order.items.indexOf(item)
-      this.order.items.splice(index, 1)
+      const index = this.order.orderItems.indexOf(item)
+      this.order.orderItems.splice(index, 1)
     } else {
       Object.assign(item, result)
     }

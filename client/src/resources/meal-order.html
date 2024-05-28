@@ -12,7 +12,7 @@
             </button>
           </div>
         </div>
-        <div class="order-item row" repeat.for="item of myOrderItems">
+        <div class="order-item row" repeat.for="item of order.orderItems">
           <div class="col-3">${item.menuItem.name}</div>
           <div class="col-2"><textarea value.bind="item.notes"></textarea></div>
           <div class="col-2">${item.quantity}</div>
