@@ -5,21 +5,23 @@ import { EventAggregator } from 'aurelia-event-aggregator'
 import { MealEditor } from './dialogs/meal-editor'
 import { MealService } from './services/meal'
 import { MenuService } from './services/menu'
+import { OrderService } from './services/order_service'
 import { UserService } from './services/user'
 import { AuthorizeStep } from './security/authorise'
 import { OrderItem } from './models/order_item'
 import { ITEM_ORDERED, MEAL_CLOSED, MEAL_REOPENED } from './utils/events'
 
-@inject(DialogService, EventAggregator, Router, MealService, MenuService, UserService)
+@inject(DialogService, EventAggregator, Router, MealService, MenuService, UserService, OrderService)
 export class Meals {
  
-  constructor (dialogService, eventAggregator, router, mealService, menuService, userService) {
+  constructor (dialogService, eventAggregator, router, mealService, menuService, userService, orderService) {
     this.dialogService = dialogService
     this.eventAggregator = eventAggregator
     this.router = router
     this.mealService = mealService
     this.menuService = menuService
     this.userService = userService
+    this.orderService = orderService
     this.meals = []
     this.selectedMeal = null
     this.myOrderItems = []

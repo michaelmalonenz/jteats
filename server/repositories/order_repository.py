@@ -30,6 +30,13 @@ class OrderRepository:
     def get_user_order_for_meal(self, meal_id, user_id):
         return self._get_existing(meal_id, user_id)
 
+    def get_orders_for_meal(self, meal_id):
+        statement = (
+            select(Order)
+            .where(Order.meal_id == meal_id)
+        )
+        return self.session.scalars(statement).all()
+
     def remove_order_item(self, order_id, item_id):
         statement = (
             select(OrderItem)

@@ -19,6 +19,15 @@ export class OrderService {
       return res.content
     }
 
+    async getOrdersForMeal (meal) {
+      const res = await this._http
+        .createRequest(`/api/meals/${meal.id}/orders`)
+        .asGet()
+        .withReviver(this._orderReviver)
+        .send()
+      return res.content
+    }
+
     _orderReviver (key, value) {
       if (key !== '' && value != null && typeof value === 'object' && isNaN(key)) {
         if (key === 'orderItems') {
