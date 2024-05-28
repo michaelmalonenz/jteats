@@ -20,20 +20,6 @@ export class OrderItemService {
     return res.content
   }
 
-  async removeOrderItem (orderItem) {
-    const res = await this._http
-      .createRequest('/api/orderitems')
-      .asDelete()
-      .withContent(orderItem)
-      .withReviver(this._orderItemReviver)
-      .send()
-
-    if (res.content === '') {
-      return null
-    }
-    return res.content
-  }
-
   async removeItemFromOrder (order, item) {
     const res = await this._http
       .createRequest(`/api/orders/${order.id}/items/${item.id}`)
