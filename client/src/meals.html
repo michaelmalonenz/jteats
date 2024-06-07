@@ -54,11 +54,15 @@
       </div>
 
       <div class="mt-5">
-        <div class="row" repeat.for="item of allOrderItems">
-          <div class="col-5 col-md-4">${item.menuItem.name}</div>
-          <div class="col-2 col-md-2">${item.notes}</div>
-          <div class="col-3 col-md-3">${item.user.name}</div>
-          <div class="col-2 col-md-1 text-center">${item.quantity}</div>
+        <div class="row order-box mb-3" repeat.for="order of orders">
+          <div class="row">
+            <div class="col">${order.user.name}</div>
+          </div>
+          <div class="row" repeat.for="item of order.orderItems">
+            <div class="col-2 col-md-1 text-center">${item.quantity}</div>
+            <div class="col-5 col-md-4">${item.menuItem.name}</div>
+            <div class="col-3 col-md-3">${item.notes}</div>
+          </div>
         </div>
       </div>
     </div>

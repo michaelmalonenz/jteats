@@ -25,7 +25,7 @@ export class Meals {
     this.meals = []
     this.selectedMeal = null
     this.myOrderItems = []
-    this.allOrderItems = []
+    this.orders = []
     this.usersWithOrders = []
   }
 
@@ -60,11 +60,15 @@ export class Meals {
     return this.selectedMeal && this.selectedMeal.ownerId === AuthorizeStep.user.id
   }
 
-  @computedFrom('allOrderItems')
+  @computedFrom('orders')
   get totalCost () {
-    return this.allOrderItems.reduce((accumulator, orderItem) => {
-      return accumulator + (orderItem.quantity * orderItem.menuItem.price)
-    }, 0)
+    let cost = 0
+    for (let order of this.orders) {
+      for (let item of order.orderItems) {
+        cost += (item.quantity * item.menuItem.price)
+      }
+    }
+    return cost
   }
 
   createMeal() {
@@ -103,8 +107,8 @@ export class Meals {
     this.menu = await this.menuService.getMenu(meal.menuId)
     if (meal.closed) {
       this.orders = await this.orderService.getOrdersForMeal(meal)
-      this.allOrderItems = this.concatOrderItems(this.orders)
-      this.aggregatedOrderItems = this.aggregateOrderItems(this.allOrderItems)
+      const allOrderItems = this.concatOrderItems(this.orders)
+      this.aggregatedOrderItems = this.aggregateOrderItems(allOrderItems)
     } else {
       this.usersWithOrders = await this.userService.getUsersWithOrdersForMeal(meal.id)
     }

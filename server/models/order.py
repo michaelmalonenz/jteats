@@ -26,7 +26,8 @@ class Order(Base):
             'userId': self.user_id,
             'mealId': self.meal_id,
             'completed': self.completed,
-            'orderItems': [x.to_viewmodel() for x in self.order_items]
+            'orderItems': [x.to_viewmodel() for x in self.order_items],
+            'user': self.user.to_viewmodel(),
         }
 
     @staticmethod
