@@ -31,6 +31,7 @@ export class MealOrder {
   }
 
   async completeOrder () {
+    this.order.completed = true
     await this.orderService.update(this.meal, this.order)
   }
 

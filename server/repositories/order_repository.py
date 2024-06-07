@@ -1,5 +1,5 @@
 from models import Order, OrderItem
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update
 
 
 class OrderRepository:
@@ -53,3 +53,21 @@ class OrderRepository:
             existing = None
         self.session.commit()
         return existing
+
+    def update_order(self, order):
+        statement = (
+            update(Order)
+            .where(Order.id == order.id)
+            .values(completed=order.completed)
+        )
+        self.session.execute(statement)
+
+        for item in order.order_items:
+            statement = (
+                update(OrderItem)
+                .where(OrderItem.id == item.id)
+                .values(notes=item.notes)
+            )
+            self.session.execute(statement)
+        self.session.commit()
+        pass

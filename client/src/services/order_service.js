@@ -28,6 +28,14 @@ export class OrderService {
       return res.content
     }
 
+    async update (meal, order) {
+      const res = await this._http
+        .createRequest(`/api/orders/${order.id}`)
+        .asPut()
+        .withContent(order)
+        .send()
+    }
+
     _orderReviver (key, value) {
       if (key !== '' && value != null && typeof value === 'object' && isNaN(key)) {
         if (key === 'orderItems') {

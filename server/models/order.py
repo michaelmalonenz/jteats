@@ -36,5 +36,5 @@ class Order(Base):
         result.user_id = kwargs.get('userId')
         result.meal_id = kwargs.get('mealId')
         result.completed = kwargs.get('completed')
-        result.order_items = [OrderItem.from_viewmodel(x) for x in kwargs.get('orderItems', [])]
+        result.order_items = [OrderItem.from_viewmodel(**x) for x in kwargs.get('orderItems', [])]
         return result
