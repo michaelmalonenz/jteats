@@ -3,7 +3,7 @@ from sqlalchemy import select, delete, update
 
 
 class OrderRepository:
-    
+
     def __init__(self, session):
         self.session = session
 
@@ -28,7 +28,7 @@ class OrderRepository:
         return order
 
     def get_user_order_for_meal(self, meal_id, user_id):
-        return self._get_existing(meal_id, user_id)
+        return self.ensure_order(meal_id, user_id)
 
     def get_orders_for_meal(self, meal_id):
         statement = (
